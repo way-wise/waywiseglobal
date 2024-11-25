@@ -1,6 +1,8 @@
 import type { Block, Field } from 'payload'
 
 import {
+  AlignFeature,
+  BlocksFeature,
   FixedToolbarFeature,
   HeadingFeature,
   InlineToolbarFeature,
@@ -8,6 +10,11 @@ import {
 } from '@payloadcms/richtext-lexical'
 
 import { link } from '@/fields/link'
+import { Banner } from '../Banner/config'
+import { SpacerBlock } from '../SpacerBlock/config'
+import { CallToAction } from '../CallToAction/config'
+import { MediaBlock } from '../MediaBlock/config'
+import { HeadingBlock } from '../HeadingBlock/config'
 
 const columnFields: Field[] = [
   {
@@ -28,6 +35,14 @@ const columnFields: Field[] = [
         value: 'twoThirds',
       },
       {
+        label: 'One Fourth',
+        value: 'oneFourth',
+      },
+      {
+        label: 'Three Fourths',
+        value: 'threeFourths',
+      },
+      {
         label: 'Full',
         value: 'full',
       },
@@ -40,9 +55,12 @@ const columnFields: Field[] = [
       features: ({ rootFeatures }) => {
         return [
           ...rootFeatures,
-          HeadingFeature({ enabledHeadingSizes: ['h2', 'h3', 'h4'] }),
-          FixedToolbarFeature(),
+          HeadingFeature({ enabledHeadingSizes: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'] }),
+          AlignFeature(),
           InlineToolbarFeature(),
+          BlocksFeature({
+            blocks: [Banner, SpacerBlock, CallToAction, MediaBlock, HeadingBlock],
+          }),
         ]
       },
     }),

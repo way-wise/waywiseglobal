@@ -6,7 +6,7 @@ import RichText from '@/components/RichText'
 
 import type { MediaBlock as MediaBlockProps } from '@/payload-types'
 
-import { Media } from '../../components/Media'
+import { Media } from '@/components/Media'
 
 type Props = MediaBlockProps & {
   breakout?: boolean
@@ -25,6 +25,7 @@ export const MediaBlock: React.FC<Props> = (props) => {
     enableGutter = true,
     imgClassName,
     media,
+    position = 'default',
     staticImage,
     disableInnerContainer,
   } = props
@@ -37,22 +38,25 @@ export const MediaBlock: React.FC<Props> = (props) => {
       className={cn(
         '',
         {
-          container: enableGutter,
+          container: position === 'default' && enableGutter,
         },
         className,
       )}
     >
-      <Media
-        imgClassName={cn('border border-border rounded-[0.8rem]', imgClassName)}
-        resource={media}
-        src={staticImage}
-      />
+      {position === 'fullscreen' && (
+        <div className="relative">
+          <Media resource={media} src={staticImage} />
+        </div>
+      )}
+      {position === 'default' && (
+        <Media imgClassName={cn('rounded', imgClassName)} resource={media} src={staticImage} />
+      )}
       {caption && (
         <div
           className={cn(
             'mt-6',
             {
-              container: !disableInnerContainer,
+              container: position === 'fullscreen' && !disableInnerContainer,
             },
             captionClassName,
           )}

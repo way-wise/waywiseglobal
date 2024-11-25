@@ -119,7 +119,25 @@ export interface Page {
       | null;
     media?: (string | null) | Media;
   };
-  layout: (CallToActionBlock | ContentBlock | MediaBlock | ArchiveBlock | FormBlock)[];
+  layout: (
+    | CallToActionBlock
+    | ContentBlock
+    | MediaBlock
+    | ArchiveBlock
+    | FormBlock
+    | MediaContentSection
+    | ServiceSection
+    | MediaSection
+    | FeatureSection
+    | MapEmbed
+    | FaqBlock
+    | BreadcrumbBlock
+    | PricingBlock
+    | TeamBlock
+    | TestimonialBlock
+    | HeadingBlock
+    | SpacerBlock
+  )[];
   meta?: {
     title?: string | null;
     image?: (string | null) | Media;
@@ -174,46 +192,6 @@ export interface Media {
       filesize?: number | null;
       filename?: string | null;
     };
-    square?: {
-      url?: string | null;
-      width?: number | null;
-      height?: number | null;
-      mimeType?: string | null;
-      filesize?: number | null;
-      filename?: string | null;
-    };
-    small?: {
-      url?: string | null;
-      width?: number | null;
-      height?: number | null;
-      mimeType?: string | null;
-      filesize?: number | null;
-      filename?: string | null;
-    };
-    medium?: {
-      url?: string | null;
-      width?: number | null;
-      height?: number | null;
-      mimeType?: string | null;
-      filesize?: number | null;
-      filename?: string | null;
-    };
-    large?: {
-      url?: string | null;
-      width?: number | null;
-      height?: number | null;
-      mimeType?: string | null;
-      filesize?: number | null;
-      filename?: string | null;
-    };
-    xlarge?: {
-      url?: string | null;
-      width?: number | null;
-      height?: number | null;
-      mimeType?: string | null;
-      filesize?: number | null;
-      filename?: string | null;
-    };
   };
 }
 /**
@@ -221,6 +199,7 @@ export interface Media {
  * via the `definition` "CallToActionBlock".
  */
 export interface CallToActionBlock {
+  theme?: ('theme01' | 'theme02' | 'theme03' | 'theme04' | 'theme05') | null;
   richText?: {
     root: {
       type: string;
@@ -252,6 +231,8 @@ export interface CallToActionBlock {
         id?: string | null;
       }[]
     | null;
+  backgroundImage?: (string | null) | Media;
+  backgroundColor?: string | null;
   id?: string | null;
   blockName?: string | null;
   blockType: 'cta';
@@ -263,7 +244,7 @@ export interface CallToActionBlock {
 export interface ContentBlock {
   columns?:
     | {
-        size?: ('oneThird' | 'half' | 'twoThirds' | 'full') | null;
+        size?: ('oneThird' | 'half' | 'twoThirds' | 'oneFourth' | 'threeFourths' | 'full') | null;
         richText?: {
           root: {
             type: string;
@@ -303,6 +284,7 @@ export interface ContentBlock {
  * via the `definition` "MediaBlock".
  */
 export interface MediaBlock {
+  position?: ('default' | 'fullscreen') | null;
   media: string | Media;
   id?: string | null;
   blockName?: string | null;
@@ -313,6 +295,9 @@ export interface MediaBlock {
  * via the `definition` "ArchiveBlock".
  */
 export interface ArchiveBlock {
+  theme?: ('theme01' | 'theme02' | 'theme03' | 'theme04' | 'theme05') | null;
+  background?: (string | null) | Media;
+  fixedBackground?: boolean | null;
   introContent?: {
     root: {
       type: string;
@@ -411,6 +396,7 @@ export interface Post {
 export interface User {
   id: string;
   name?: string | null;
+  roles?: ('admin' | 'operation' | 'customer')[] | null;
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -614,6 +600,408 @@ export interface Form {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "MediaContentSection".
+ */
+export interface MediaContentSection {
+  alignment?: ('contentMedia' | 'mediaContent') | null;
+  mediaHeight: number;
+  richText?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  enableLink?: boolean | null;
+  link?: {
+    type?: ('reference' | 'custom') | null;
+    newTab?: boolean | null;
+    reference?: {
+      relationTo: 'pages';
+      value: string | Page;
+    } | null;
+    url?: string | null;
+    label: string;
+  };
+  contentImage: string | Media;
+  backgroundImage?: (string | null) | Media;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'mediaContentSection';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ServiceSection".
+ */
+export interface ServiceSection {
+  intro?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  column: number;
+  fixedBackground?: boolean | null;
+  services?:
+    | {
+        alignment?: ('contentMedia' | 'mediaContent') | null;
+        richText?: {
+          root: {
+            type: string;
+            children: {
+              type: string;
+              version: number;
+              [k: string]: unknown;
+            }[];
+            direction: ('ltr' | 'rtl') | null;
+            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+            indent: number;
+            version: number;
+          };
+          [k: string]: unknown;
+        } | null;
+        enableLink?: boolean | null;
+        link?: {
+          type?: ('reference' | 'custom') | null;
+          newTab?: boolean | null;
+          reference?: {
+            relationTo: 'pages';
+            value: string | Page;
+          } | null;
+          url?: string | null;
+          label: string;
+        };
+        contentImage: string | Media;
+        id?: string | null;
+      }[]
+    | null;
+  backgroundImage?: (string | null) | Media;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'serviceSection';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "MediaSection".
+ */
+export interface MediaSection {
+  background: 'default' | 'color' | 'gradient' | 'image';
+  position: 'box' | 'fullscreen';
+  backgroundAlign?: ('center' | 'left' | 'right') | null;
+  richText?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  links?:
+    | {
+        link: {
+          type?: ('reference' | 'custom') | null;
+          newTab?: boolean | null;
+          reference?: {
+            relationTo: 'pages';
+            value: string | Page;
+          } | null;
+          url?: string | null;
+          label: string;
+          appearance?: ('default' | 'outline') | null;
+        };
+        id?: string | null;
+      }[]
+    | null;
+  media?: (string | null) | Media;
+  bgColor?: string | null;
+  startColor?: string | null;
+  endColor?: string | null;
+  angle?: number | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'mediaSection';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "FeatureSection".
+ */
+export interface FeatureSection {
+  background?: (string | null) | Media;
+  fixedBackground?: boolean | null;
+  alignment?: ('contentMedia' | 'mediaContent') | null;
+  richText?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  enableLink?: boolean | null;
+  link?: {
+    type?: ('reference' | 'custom') | null;
+    newTab?: boolean | null;
+    reference?: {
+      relationTo: 'pages';
+      value: string | Page;
+    } | null;
+    url?: string | null;
+    label: string;
+  };
+  featureImage1?: (string | null) | Media;
+  featureImage2?: (string | null) | Media;
+  abstructImageTop?: (string | null) | Media;
+  abstructImageBottom?: (string | null) | Media;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'featureSection';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "MapEmbed".
+ */
+export interface MapEmbed {
+  position?: ('default' | 'fullscreen') | null;
+  mapHeight?: number | null;
+  mapCode: string;
+  richText?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'mapEmbed';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "FaqBlock".
+ */
+export interface FaqBlock {
+  theme?: ('theme01' | 'theme02' | 'theme03') | null;
+  title?: string | null;
+  faqItems?:
+    | {
+        question?: string | null;
+        answer?: {
+          root: {
+            type: string;
+            children: {
+              type: string;
+              version: number;
+              [k: string]: unknown;
+            }[];
+            direction: ('ltr' | 'rtl') | null;
+            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+            indent: number;
+            version: number;
+          };
+          [k: string]: unknown;
+        } | null;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'faq';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "BreadcrumbBlock".
+ */
+export interface BreadcrumbBlock {
+  theme?: 'theme01' | null;
+  title?: string | null;
+  backgroundImage?: (string | null) | Media;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'breadcrumb';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "PricingBlock".
+ */
+export interface PricingBlock {
+  theme?: ('theme01' | 'theme02' | 'theme03') | null;
+  introContent?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  priceCards?:
+    | {
+        title?: string | null;
+        description?: string | null;
+        highlightText?: string | null;
+        price?: number | null;
+        priceType?: boolean | null;
+        features?:
+          | {
+              feature?: string | null;
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'pricing';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "TeamBlock".
+ */
+export interface TeamBlock {
+  theme?: ('theme01' | 'theme02' | 'theme03' | 'theme04' | 'theme05') | null;
+  introContent?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  teams?:
+    | {
+        name?: string | null;
+        position?: string | null;
+        image?: (string | null) | Media;
+        quote?: string | null;
+        socialLinks?:
+          | {
+              logo?: (string | null) | Media;
+              link?: string | null;
+              openNewTab?: boolean | null;
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'team';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "TestimonialBlock".
+ */
+export interface TestimonialBlock {
+  theme?: ('theme01' | 'theme02' | 'theme03' | 'theme04') | null;
+  introContent?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  testimonials?:
+    | {
+        name?: string | null;
+        position?: string | null;
+        image?: (string | null) | Media;
+        quote?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'testimonial';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "HeadingBlock".
+ */
+export interface HeadingBlock {
+  text?: string | null;
+  fontSize?: number | null;
+  textAlign?: ('left' | 'center' | 'right') | null;
+  color?: string | null;
+  fontWeight?: ('400' | '500' | '600' | '700') | null;
+  fontStyle?: ('normal' | 'italic') | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'headingBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "SpacerBlock".
+ */
+export interface SpacerBlock {
+  space?: number | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'spacer';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "redirects".
  */
 export interface Redirect {
@@ -799,6 +1187,7 @@ export interface PagesSelect<T extends boolean = true> {
         cta?:
           | T
           | {
+              theme?: T;
               richText?: T;
               links?:
                 | T
@@ -815,6 +1204,8 @@ export interface PagesSelect<T extends boolean = true> {
                         };
                     id?: T;
                   };
+              backgroundImage?: T;
+              backgroundColor?: T;
               id?: T;
               blockName?: T;
             };
@@ -845,6 +1236,7 @@ export interface PagesSelect<T extends boolean = true> {
         mediaBlock?:
           | T
           | {
+              position?: T;
               media?: T;
               id?: T;
               blockName?: T;
@@ -852,6 +1244,9 @@ export interface PagesSelect<T extends boolean = true> {
         archive?:
           | T
           | {
+              theme?: T;
+              background?: T;
+              fixedBackground?: T;
               introContent?: T;
               populateBy?: T;
               relationTo?: T;
@@ -867,6 +1262,228 @@ export interface PagesSelect<T extends boolean = true> {
               form?: T;
               enableIntro?: T;
               introContent?: T;
+              id?: T;
+              blockName?: T;
+            };
+        mediaContentSection?:
+          | T
+          | {
+              alignment?: T;
+              mediaHeight?: T;
+              richText?: T;
+              enableLink?: T;
+              link?:
+                | T
+                | {
+                    type?: T;
+                    newTab?: T;
+                    reference?: T;
+                    url?: T;
+                    label?: T;
+                  };
+              contentImage?: T;
+              backgroundImage?: T;
+              id?: T;
+              blockName?: T;
+            };
+        serviceSection?:
+          | T
+          | {
+              intro?: T;
+              column?: T;
+              fixedBackground?: T;
+              services?:
+                | T
+                | {
+                    alignment?: T;
+                    richText?: T;
+                    enableLink?: T;
+                    link?:
+                      | T
+                      | {
+                          type?: T;
+                          newTab?: T;
+                          reference?: T;
+                          url?: T;
+                          label?: T;
+                        };
+                    contentImage?: T;
+                    id?: T;
+                  };
+              backgroundImage?: T;
+              id?: T;
+              blockName?: T;
+            };
+        mediaSection?:
+          | T
+          | {
+              background?: T;
+              position?: T;
+              backgroundAlign?: T;
+              richText?: T;
+              links?:
+                | T
+                | {
+                    link?:
+                      | T
+                      | {
+                          type?: T;
+                          newTab?: T;
+                          reference?: T;
+                          url?: T;
+                          label?: T;
+                          appearance?: T;
+                        };
+                    id?: T;
+                  };
+              media?: T;
+              bgColor?: T;
+              startColor?: T;
+              endColor?: T;
+              angle?: T;
+              id?: T;
+              blockName?: T;
+            };
+        featureSection?:
+          | T
+          | {
+              background?: T;
+              fixedBackground?: T;
+              alignment?: T;
+              richText?: T;
+              enableLink?: T;
+              link?:
+                | T
+                | {
+                    type?: T;
+                    newTab?: T;
+                    reference?: T;
+                    url?: T;
+                    label?: T;
+                  };
+              featureImage1?: T;
+              featureImage2?: T;
+              abstructImageTop?: T;
+              abstructImageBottom?: T;
+              id?: T;
+              blockName?: T;
+            };
+        mapEmbed?:
+          | T
+          | {
+              position?: T;
+              mapHeight?: T;
+              mapCode?: T;
+              richText?: T;
+              id?: T;
+              blockName?: T;
+            };
+        faq?:
+          | T
+          | {
+              theme?: T;
+              title?: T;
+              faqItems?:
+                | T
+                | {
+                    question?: T;
+                    answer?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        breadcrumb?:
+          | T
+          | {
+              theme?: T;
+              title?: T;
+              backgroundImage?: T;
+              id?: T;
+              blockName?: T;
+            };
+        pricing?:
+          | T
+          | {
+              theme?: T;
+              introContent?: T;
+              priceCards?:
+                | T
+                | {
+                    title?: T;
+                    description?: T;
+                    highlightText?: T;
+                    price?: T;
+                    priceType?: T;
+                    features?:
+                      | T
+                      | {
+                          feature?: T;
+                          id?: T;
+                        };
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        team?:
+          | T
+          | {
+              theme?: T;
+              introContent?: T;
+              teams?:
+                | T
+                | {
+                    name?: T;
+                    position?: T;
+                    image?: T;
+                    quote?: T;
+                    socialLinks?:
+                      | T
+                      | {
+                          logo?: T;
+                          link?: T;
+                          openNewTab?: T;
+                          id?: T;
+                        };
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        testimonial?:
+          | T
+          | {
+              theme?: T;
+              introContent?: T;
+              testimonials?:
+                | T
+                | {
+                    name?: T;
+                    position?: T;
+                    image?: T;
+                    quote?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        headingBlock?:
+          | T
+          | {
+              text?: T;
+              fontSize?: T;
+              textAlign?: T;
+              color?: T;
+              fontWeight?: T;
+              fontStyle?: T;
+              id?: T;
+              blockName?: T;
+            };
+        spacer?:
+          | T
+          | {
+              space?: T;
               id?: T;
               blockName?: T;
             };
@@ -950,56 +1567,6 @@ export interface MediaSelect<T extends boolean = true> {
               filesize?: T;
               filename?: T;
             };
-        square?:
-          | T
-          | {
-              url?: T;
-              width?: T;
-              height?: T;
-              mimeType?: T;
-              filesize?: T;
-              filename?: T;
-            };
-        small?:
-          | T
-          | {
-              url?: T;
-              width?: T;
-              height?: T;
-              mimeType?: T;
-              filesize?: T;
-              filename?: T;
-            };
-        medium?:
-          | T
-          | {
-              url?: T;
-              width?: T;
-              height?: T;
-              mimeType?: T;
-              filesize?: T;
-              filename?: T;
-            };
-        large?:
-          | T
-          | {
-              url?: T;
-              width?: T;
-              height?: T;
-              mimeType?: T;
-              filesize?: T;
-              filename?: T;
-            };
-        xlarge?:
-          | T
-          | {
-              url?: T;
-              width?: T;
-              height?: T;
-              mimeType?: T;
-              filesize?: T;
-              filename?: T;
-            };
       };
 }
 /**
@@ -1026,6 +1593,7 @@ export interface CategoriesSelect<T extends boolean = true> {
  */
 export interface UsersSelect<T extends boolean = true> {
   name?: T;
+  roles?: T;
   updatedAt?: T;
   createdAt?: T;
   email?: T;
@@ -1265,6 +1833,13 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
  */
 export interface Header {
   id: string;
+  logo: string | Media;
+  logo_dark?: (string | null) | Media;
+  icon?: (string | null) | Media;
+  callback?: string | null;
+  fixedTop?: boolean | null;
+  sticky?: boolean | null;
+  scrollSticky?: boolean | null;
   navItems?:
     | {
         link: {
@@ -1277,6 +1852,21 @@ export interface Header {
           url?: string | null;
           label: string;
         };
+        subNavItems?:
+          | {
+              link: {
+                type?: ('reference' | 'custom') | null;
+                newTab?: boolean | null;
+                reference?: {
+                  relationTo: 'pages';
+                  value: string | Page;
+                } | null;
+                url?: string | null;
+                label: string;
+              };
+              id?: string | null;
+            }[]
+          | null;
         id?: string | null;
       }[]
     | null;
@@ -1289,8 +1879,34 @@ export interface Header {
  */
 export interface Footer {
   id: string;
-  navItems?:
+  footerLogo?: (string | null) | Media;
+  footerBg?: (string | null) | Media;
+  about?: string | null;
+  footerNavItems?:
     | {
+        navTitle?: string | null;
+        navItems?:
+          | {
+              link: {
+                type?: ('reference' | 'custom') | null;
+                newTab?: boolean | null;
+                reference?: {
+                  relationTo: 'pages';
+                  value: string | Page;
+                } | null;
+                url?: string | null;
+                label: string;
+              };
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+      }[]
+    | null;
+  copyright?: string | null;
+  socialLinks?:
+    | {
+        socialLogo?: (string | null) | Media;
         link: {
           type?: ('reference' | 'custom') | null;
           newTab?: boolean | null;
@@ -1312,6 +1928,13 @@ export interface Footer {
  * via the `definition` "header_select".
  */
 export interface HeaderSelect<T extends boolean = true> {
+  logo?: T;
+  logo_dark?: T;
+  icon?: T;
+  callback?: T;
+  fixedTop?: T;
+  sticky?: T;
+  scrollSticky?: T;
   navItems?:
     | T
     | {
@@ -1324,6 +1947,20 @@ export interface HeaderSelect<T extends boolean = true> {
               url?: T;
               label?: T;
             };
+        subNavItems?:
+          | T
+          | {
+              link?:
+                | T
+                | {
+                    type?: T;
+                    newTab?: T;
+                    reference?: T;
+                    url?: T;
+                    label?: T;
+                  };
+              id?: T;
+            };
         id?: T;
       };
   updatedAt?: T;
@@ -1335,9 +1972,34 @@ export interface HeaderSelect<T extends boolean = true> {
  * via the `definition` "footer_select".
  */
 export interface FooterSelect<T extends boolean = true> {
-  navItems?:
+  footerLogo?: T;
+  footerBg?: T;
+  about?: T;
+  footerNavItems?:
     | T
     | {
+        navTitle?: T;
+        navItems?:
+          | T
+          | {
+              link?:
+                | T
+                | {
+                    type?: T;
+                    newTab?: T;
+                    reference?: T;
+                    url?: T;
+                    label?: T;
+                  };
+              id?: T;
+            };
+        id?: T;
+      };
+  copyright?: T;
+  socialLinks?:
+    | T
+    | {
+        socialLogo?: T;
         link?:
           | T
           | {

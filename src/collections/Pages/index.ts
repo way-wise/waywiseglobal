@@ -21,6 +21,18 @@ import {
   PreviewField,
 } from '@payloadcms/plugin-seo/fields'
 import { getServerSideURL } from '@/utilities/getURL'
+import { MediaContentSection } from '@/blocks/MediaContentSection/config'
+import { ServiceSection } from '@/blocks/ServiceSection/config'
+import { MediaSection } from '@/blocks/MediaSection/config'
+import { FeatureSection } from '@/blocks/FeatureSection/config'
+import { MapEmbed } from '@/blocks/MapEmbed/config'
+import { FaqBlock } from '@/blocks/FaqBlock/config'
+import { BreadcrumbBlock } from '@/blocks/BreadcrumbBlock/config'
+import { PricingBlock } from '@/blocks/PricingBlock/config'
+import { TeamBlock } from '@/blocks/TeamBlock/config'
+import { TestimonialBlock } from '@/blocks/TestimonialBlock/config'
+import { HeadingBlock } from '@/blocks/HeadingBlock/config'
+import { SpacerBlock } from '@/blocks/SpacerBlock/config'
 
 export const Pages: CollectionConfig = {
   slug: 'pages',
@@ -76,7 +88,24 @@ export const Pages: CollectionConfig = {
             {
               name: 'layout',
               type: 'blocks',
-              blocks: [CallToAction, Content, MediaBlock, Archive, FormBlock],
+              blocks: [CallToAction,
+                Content,
+                MediaBlock,
+                Archive,
+                FormBlock,
+                MediaContentSection,
+                ServiceSection,
+                MediaSection,
+                FeatureSection,
+                MapEmbed,
+                FaqBlock,
+                BreadcrumbBlock,
+                PricingBlock,
+                TeamBlock,
+                TestimonialBlock,
+                HeadingBlock,
+                SpacerBlock
+              ],
               required: true,
             },
           ],

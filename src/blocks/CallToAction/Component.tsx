@@ -1,23 +1,32 @@
 import React from 'react'
 
-import type { CallToActionBlock as CTABlockProps } from '@/payload-types'
+import type { CallToActionBlock as CallToActionBlockProps } from '@/payload-types'
+import { CTATheme01 } from './theme/Theme01'
+import { CTATheme02 } from './theme/Theme02'
+import { CTATheme03 } from './theme/Theme03'
+import { CTATheme04 } from './theme/Theme04'
+import { CTATheme05 } from './theme/Theme05'
 
-import RichText from '@/components/RichText'
-import { CMSLink } from '@/components/Link'
+const CTAs = {
+  theme01: CTATheme01,
+  theme02: CTATheme02,
+  theme03: CTATheme03,
+  theme04: CTATheme04,
+  theme05: CTATheme05,
+}
 
-export const CallToActionBlock: React.FC<CTABlockProps> = ({ links, richText }) => {
-  return (
-    <div className="container">
-      <div className="bg-card rounded border-border border p-4 flex flex-col gap-8 md:flex-row md:justify-between md:items-center">
-        <div className="max-w-[48rem] flex items-center">
-          {richText && <RichText className="mb-0" content={richText} enableGutter={false} />}
-        </div>
-        <div className="flex flex-col gap-8">
-          {(links || []).map(({ link }, i) => {
-            return <CMSLink key={i} size="lg" {...link} />
-          })}
-        </div>
-      </div>
-    </div>
-  )
+export const CallToActionBlock: React.FC<
+  CallToActionBlockProps & {
+    id?: string
+  }
+> = (props) => {
+  const { theme } = props || {}
+
+  if (!theme) return null
+
+  const CTAToRender = CTAs[theme]
+
+  if (!CTAToRender) return null
+
+  return <CTAToRender {...props} />
 }

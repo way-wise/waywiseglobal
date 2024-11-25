@@ -1,65 +1,45 @@
-import type { Post, ArchiveBlock as ArchiveBlockProps } from '@/payload-types'
+'use client'
 
-import configPromise from '@payload-config'
-import { getPayload } from 'payload'
 import React from 'react'
-import RichText from '@/components/RichText'
 
-import { CollectionArchive } from '@/components/CollectionArchive'
+import type { ArchiveBlock as ArchiveBlockProps } from '@/payload-types'
+import { BlogTheme01 } from './theme/Theme01'
+import { BlogTheme02 } from './theme/Theme02'
+import { BlogTheme03 } from './theme/Theme03'
+import { BlogTheme04 } from './theme/Theme04'
+import { BlogTheme05 } from './theme/Theme05'
+
+const blogs = {
+  theme01: BlogTheme01,
+  theme02: BlogTheme02,
+  theme03: BlogTheme03,
+  theme04: BlogTheme04,
+  theme05: BlogTheme05
+}
 
 export const ArchiveBlock: React.FC<
-  ArchiveBlockProps & {
-    id?: string
-  }
-> = async (props) => {
-  const { id, categories, introContent, limit: limitFromProps, populateBy, selectedDocs } = props
+ArchiveBlockProps & {
+  id?: string
+}
+> = (props) => {
 
-  const limit = limitFromProps || 3
+  const {
+    id,
+    theme,
+    categories,
+    background,
+    fixedBackground,
+    introContent,
+    limit: limitFromProps,
+    populateBy,
+    selectedDocs,
+  } = props || {}
 
-  let posts: Post[] = []
+  if (!theme) return null
 
-  if (populateBy === 'collection') {
-    const payload = await getPayload({ config: configPromise })
+  const BlogToRender = blogs[theme]
 
-    const flattenedCategories = categories?.map((category) => {
-      if (typeof category === 'object') return category.id
-      else return category
-    })
+  if (!BlogToRender) return null
 
-    const fetchedPosts = await payload.find({
-      collection: 'posts',
-      depth: 1,
-      limit,
-      ...(flattenedCategories && flattenedCategories.length > 0
-        ? {
-            where: {
-              categories: {
-                in: flattenedCategories,
-              },
-            },
-          }
-        : {}),
-    })
-
-    posts = fetchedPosts.docs
-  } else {
-    if (selectedDocs?.length) {
-      const filteredSelectedPosts = selectedDocs.map((post) => {
-        if (typeof post.value === 'object') return post.value
-      }) as Post[]
-
-      posts = filteredSelectedPosts
-    }
-  }
-
-  return (
-    <div className="my-16" id={`block-${id}`}>
-      {introContent && (
-        <div className="container mb-16">
-          <RichText className="ml-0 max-w-[48rem]" content={introContent} enableGutter={false} />
-        </div>
-      )}
-      <CollectionArchive posts={posts} />
-    </div>
-  )
+  return <BlogToRender {...props} />
 }

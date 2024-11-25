@@ -1,29 +1,19 @@
-import clsx from 'clsx'
+import { Header } from '@/payload-types'
+import { getCachedGlobal } from '@/utilities/getGlobals'
 import React from 'react'
+import { Media } from '../Media'
 
-interface Props {
-  className?: string
-  loading?: 'lazy' | 'eager'
-  priority?: 'auto' | 'high' | 'low'
+const Logo: React.FC = async () => {
+  { /* @ts-expect-error */  }
+  const header: Header = await getCachedGlobal('header', 1)();
+  const logo = header?.logo;
+  console.log('logo', logo)
+  return logo && (
+      <Media
+        resource={logo}
+        className="w-48 sm:w-60 md:w-72 lg:80 h-auto dark:brightness-200"
+      />
+    )
 }
 
-export const Logo = (props: Props) => {
-  const { loading: loadingFromProps, priority: priorityFromProps, className } = props
-
-  const loading = loadingFromProps || 'lazy'
-  const priority = priorityFromProps || 'low'
-
-  return (
-    /* eslint-disable @next/next/no-img-element */
-    <img
-      alt="Payload Logo"
-      width={193}
-      height={34}
-      loading={loading}
-      fetchPriority={priority}
-      decoding="async"
-      className={clsx('max-w-[9.375rem] w-full h-[34px]', className)}
-      src="https://raw.githubusercontent.com/payloadcms/payload/main/packages/ui/src/assets/payload-logo-light.svg"
-    />
-  )
-}
+export default Logo

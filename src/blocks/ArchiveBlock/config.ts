@@ -12,6 +12,44 @@ export const Archive: Block = {
   interfaceName: 'ArchiveBlock',
   fields: [
     {
+      name: 'theme',
+      type: 'select',
+      defaultValue: 'theme01',
+      options: [
+        {
+          label: 'Theme01',
+          value: 'theme01',
+        },
+        {
+          label: 'Theme02',
+          value: 'theme02',
+        },
+        {
+          label: 'Theme03',
+          value: 'theme03',
+        },
+        {
+          label: 'Theme04',
+          value: 'theme04',
+        },
+        {
+          label: 'Theme05',
+          value: 'theme05',
+        },
+      ],
+    },
+    {
+      name: 'background',
+      type: 'upload',
+      relationTo: 'media',
+      required: false,
+    },
+    {
+      name: 'fixedBackground',
+      type: 'checkbox',
+      defaultValue: false
+    },
+    {
       name: 'introContent',
       type: 'richText',
       editor: lexicalEditor({

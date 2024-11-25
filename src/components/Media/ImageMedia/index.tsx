@@ -47,7 +47,7 @@ export const ImageMedia: React.FC<MediaProps> = (props) => {
     height = fullHeight!
     alt = altFromResource || ''
 
-    src = `${getClientSideURL()}${url}`
+    src = `${getClientSideURL()}${url || '/assets/placeholder.png'}`
   }
 
   const loading = loadingFromProps || 'lazy'
