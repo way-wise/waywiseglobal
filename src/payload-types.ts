@@ -85,7 +85,7 @@ export interface Page {
   id: string;
   title: string;
   hero: {
-    type: 'none' | 'highImpact' | 'mediumImpact' | 'lowImpact';
+    type: 'none' | 'multiImpact' | 'highImpact' | 'mediumImpact' | 'lowImpact';
     richText?: {
       root: {
         type: string;
@@ -118,6 +118,27 @@ export interface Page {
         }[]
       | null;
     media?: (string | null) | Media;
+    imagesTop?:
+      | {
+          image?: (string | null) | Media;
+          url?: string | null;
+          id?: string | null;
+        }[]
+      | null;
+    imagesMiddle?:
+      | {
+          image?: (string | null) | Media;
+          url?: string | null;
+          id?: string | null;
+        }[]
+      | null;
+    imagesBottom?:
+      | {
+          image?: (string | null) | Media;
+          url?: string | null;
+          id?: string | null;
+        }[]
+      | null;
   };
   layout: (
     | CallToActionBlock
@@ -142,6 +163,7 @@ export interface Page {
     title?: string | null;
     image?: (string | null) | Media;
     description?: string | null;
+    keywords?: string | null;
   };
   publishedAt?: string | null;
   slug?: string | null;
@@ -374,6 +396,7 @@ export interface Post {
     title?: string | null;
     image?: (string | null) | Media;
     description?: string | null;
+    keywords?: string | null;
   };
   publishedAt?: string | null;
   authors?: (string | User)[] | null;
@@ -1180,6 +1203,27 @@ export interface PagesSelect<T extends boolean = true> {
               id?: T;
             };
         media?: T;
+        imagesTop?:
+          | T
+          | {
+              image?: T;
+              url?: T;
+              id?: T;
+            };
+        imagesMiddle?:
+          | T
+          | {
+              image?: T;
+              url?: T;
+              id?: T;
+            };
+        imagesBottom?:
+          | T
+          | {
+              image?: T;
+              url?: T;
+              id?: T;
+            };
       };
   layout?:
     | T
@@ -1495,6 +1539,7 @@ export interface PagesSelect<T extends boolean = true> {
         title?: T;
         image?: T;
         description?: T;
+        keywords?: T;
         preview?: T;
       };
   publishedAt?: T;
@@ -1520,6 +1565,7 @@ export interface PostsSelect<T extends boolean = true> {
         title?: T;
         image?: T;
         description?: T;
+        keywords?: T;
         preview?: T;
       };
   publishedAt?: T;

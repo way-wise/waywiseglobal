@@ -24,6 +24,10 @@ export const hero: Field = {
           value: 'none',
         },
         {
+          label: 'Multi Impact',
+          value: 'multiImpact',
+        },
+        {
           label: 'High Impact',
           value: 'highImpact',
         },
@@ -62,10 +66,82 @@ export const hero: Field = {
       name: 'media',
       type: 'upload',
       admin: {
-        condition: (_, { type } = {}) => ['highImpact', 'mediumImpact'].includes(type),
+        condition: (_, { type } = {}) => ['multiImpact', 'highImpact', 'mediumImpact'].includes(type),
       },
       relationTo: 'media',
       required: true,
+    },
+    {
+      type: 'array',
+      name: 'imagesTop',
+      maxRows: 4,
+      fields: [
+        {
+          type: 'row',
+          fields: [
+            {
+              name: 'image',
+              type: 'upload',
+              relationTo: 'media',
+            },
+            {
+              name: 'url',
+              type: 'text',
+            },
+          ],
+        },
+      ],
+      admin: {
+        condition: (_, { type } = {}) => type === 'multiImpact',
+      },
+    },
+    {
+      type: 'array',
+      name: 'imagesMiddle',
+      maxRows: 2,
+      fields: [
+        {
+          type: 'row',
+          fields: [
+            {
+              name: 'image',
+              type: 'upload',
+              relationTo: 'media',
+            },
+            {
+              name: 'url',
+              type: 'text',
+            },
+          ],
+        },
+      ],
+      admin: {
+        condition: (_, { type } = {}) => type === 'multiImpact',
+      },
+    },
+    {
+      type: 'array',
+      name: 'imagesBottom',
+      maxRows: 4,
+      fields: [
+        {
+          type: 'row',
+          fields: [
+            {
+              name: 'image',
+              type: 'upload',
+              relationTo: 'media',
+            },
+            {
+              name: 'url',
+              type: 'text',
+            },
+          ],
+        },
+      ],
+      admin: {
+        condition: (_, { type } = {}) => type === 'multiImpact',
+      },
     },
   ],
   label: false,

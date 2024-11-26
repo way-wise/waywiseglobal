@@ -9,12 +9,12 @@ import {
   lexicalEditor,
 } from '@payloadcms/richtext-lexical'
 
-import { authenticated } from '../../access/authenticated'
-import { authenticatedOrPublished } from '../../access/authenticatedOrPublished'
-import { Banner } from '../../blocks/Banner/config'
-import { Code } from '../../blocks/Code/config'
-import { MediaBlock } from '../../blocks/MediaBlock/config'
-import { generatePreviewPath } from '../../utilities/generatePreviewPath'
+import { authenticated } from '@/access/authenticated'
+import { authenticatedOrPublished } from '@/access/authenticatedOrPublished'
+import { Banner } from '@/blocks/Banner/config'
+import { Code } from '@/blocks/Code/config'
+import { MediaBlock } from '@/blocks/MediaBlock/config'
+import { generatePreviewPath } from '@/utilities/generatePreviewPath'
 import { populateAuthors } from './hooks/populateAuthors'
 import { revalidatePost } from './hooks/revalidatePost'
 
@@ -49,6 +49,7 @@ export const Posts: CollectionConfig = {
   },
   admin: {
     defaultColumns: ['title', 'slug', 'updatedAt'],
+    group: 'content',
     livePreview: {
       url: ({ data }) => {
         const path = generatePreviewPath({
@@ -148,6 +149,11 @@ export const Posts: CollectionConfig = {
             }),
 
             MetaDescriptionField({}),
+            {
+              name: 'keywords',
+              type: 'textarea',
+              label: 'Key Words',
+            },
             PreviewField({
               // if the `generateUrl` function is configured
               hasGenerateFn: true,
@@ -155,7 +161,7 @@ export const Posts: CollectionConfig = {
               // field paths to match the target field for data
               titlePath: 'meta.title',
               descriptionPath: 'meta.description',
-            }),
+            })
           ],
         },
       ],

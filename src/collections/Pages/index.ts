@@ -128,6 +128,11 @@ export const Pages: CollectionConfig = {
             }),
 
             MetaDescriptionField({}),
+            {
+              name: 'keywords',
+              type: 'textarea',
+              label: 'Key Words',
+            },
             PreviewField({
               // if the `generateUrl` function is configured
               hasGenerateFn: true,
@@ -135,7 +140,7 @@ export const Pages: CollectionConfig = {
               // field paths to match the target field for data
               titlePath: 'meta.title',
               descriptionPath: 'meta.description',
-            }),
+            })
           ],
         },
       ],

@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 
-import type { Page, Post } from '../payload-types'
+import type { Page, Post } from '@/payload-types'
 
 import { mergeOpenGraph } from './mergeOpenGraph'
 import { getServerSideURL } from './getURL'
@@ -17,8 +17,11 @@ export const generateMeta = async (args: {
     `${getServerSideURL()}`
 
   const title = doc?.meta?.title
-    ? doc?.meta?.title + ' | Way-Wise'
-    : 'Way-Wise'
+    ? doc?.meta?.title
+    : 'Way-Wise Tech'
+
+  const keywords = doc?.meta?.keywords
+    ? doc?.meta?.keywords : ''
 
   return {
     description: doc?.meta?.description,
@@ -35,5 +38,6 @@ export const generateMeta = async (args: {
       url: Array.isArray(doc?.slug) ? doc?.slug.join('/') : '/',
     }),
     title,
+    keywords
   }
 }
