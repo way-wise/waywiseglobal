@@ -1,6 +1,8 @@
 import type { Field } from 'payload'
 
 import {
+  AlignFeature,
+  BlocksFeature,
   FixedToolbarFeature,
   HeadingFeature,
   InlineToolbarFeature,
@@ -8,6 +10,11 @@ import {
 } from '@payloadcms/richtext-lexical'
 
 import { linkGroup } from '@/fields/linkGroup'
+import { Banner } from '@/blocks/Banner/config'
+import { SpacerBlock } from '@/blocks/SpacerBlock/config'
+import { MediaBlock } from '@/blocks/MediaBlock/config'
+import { CallToAction } from '@/blocks/CallToAction/config'
+import { HeadingBlock } from '@/blocks/HeadingBlock/config'
 
 export const hero: Field = {
   name: 'hero',
@@ -49,9 +56,13 @@ export const hero: Field = {
         features: ({ rootFeatures }) => {
           return [
             ...rootFeatures,
-            HeadingFeature({ enabledHeadingSizes: ['h1', 'h2', 'h3', 'h4'] }),
-            FixedToolbarFeature(),
-            InlineToolbarFeature(),
+            HeadingFeature({ enabledHeadingSizes: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'] }),
+          AlignFeature(),
+          InlineToolbarFeature(),
+          FixedToolbarFeature(),
+          BlocksFeature({
+            blocks: [Banner, SpacerBlock, CallToAction, MediaBlock, HeadingBlock],
+          }),
           ]
         },
       }),

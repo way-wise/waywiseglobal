@@ -2,10 +2,14 @@ import { BannerBlock } from '@/blocks/Banner/Component'
 import { CallToActionBlock } from '@/blocks/CallToAction/Component'
 import { CodeBlock, CodeBlockProps } from '@/blocks/Code/Component'
 import { MediaBlock } from '@/blocks/MediaBlock/Component'
+import { HeadingBlock } from '@/blocks/HeadingBlock/Component'
+import { SpacerBlock } from '@/blocks/SpacerBlock/Component'
 import React, { Fragment, JSX } from 'react'
 import { CMSLink } from '@/components/Link'
 import { DefaultNodeTypes, SerializedBlockNode } from '@payloadcms/richtext-lexical'
 import type { BannerBlock as BannerBlockProps } from '@/payload-types'
+import type { HeadingBlock as HeadingBlockProps } from '@/payload-types'
+import type { SpacerBlock as SpacerBlockProps } from '@/payload-types'
 
 import {
   IS_BOLD,
@@ -23,7 +27,14 @@ import type {
 
 export type NodeTypes =
   | DefaultNodeTypes
-  | SerializedBlockNode<CTABlockProps | MediaBlockProps | BannerBlockProps | CodeBlockProps>
+  | SerializedBlockNode<
+      | CTABlockProps
+      | MediaBlockProps
+      | BannerBlockProps
+      | CodeBlockProps
+      | HeadingBlockProps
+      | SpacerBlockProps
+    >
 
 type Props = {
   nodes: NodeTypes[]
@@ -120,6 +131,10 @@ export function serializeLexical({ nodes }: Props): JSX.Element {
               )
             case 'banner':
               return <BannerBlock className="col-start-2 mb-4" key={index} {...block} />
+            case 'headingBlock':
+              return <HeadingBlock key={index} {...block} />
+            case 'spacer':
+              return <SpacerBlock key={index} {...block} />
             case 'code':
               return <CodeBlock className="col-start-2" key={index} {...block} />
             default:
@@ -132,7 +147,7 @@ export function serializeLexical({ nodes }: Props): JSX.Element {
             }
             case 'paragraph': {
               return (
-                <p className="col-start-2" key={index}>
+                <p className={`col-start-2 text-${node.format}`} key={index}>
                   {serializedChildren}
                 </p>
               )
@@ -140,15 +155,18 @@ export function serializeLexical({ nodes }: Props): JSX.Element {
             case 'heading': {
               const Tag = node?.tag
               return (
-                <Tag className="col-start-2" key={index}>
+                <Tag className={`col-start-2 text-${node.format}`} key={index}>
                   {serializedChildren}
                 </Tag>
               )
             }
+            case 'horizontalrule': {
+              return <hr key={index} className="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700" />
+            }
             case 'list': {
               const Tag = node?.tag
               return (
-                <Tag className="list col-start-2" key={index}>
+                <Tag className="list space-y-4 text-center md:text-left col-start-2" key={index}>
                   {serializedChildren}
                 </Tag>
               )
@@ -170,8 +188,27 @@ export function serializeLexical({ nodes }: Props): JSX.Element {
                 )
               } else {
                 return (
-                  <li key={index} value={node?.value}>
-                    {serializedChildren}
+                  <li
+                    key={index}
+                    value={node?.value}
+                    className="flex items-center space-x-3 rtl:space-x-reverse"
+                  >
+                    <svg
+                      className="flex-shrink-0 w-3.5 h-3.5 text-green-500 dark:text-green-400"
+                      aria-hidden="true"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 16 12"
+                    >
+                      <path
+                        stroke="currentColor"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M1 5.917 5.724 10.5 15 1.5"
+                      />
+                    </svg>
+                    <span>{serializedChildren}</span>
                   </li>
                 )
               }
