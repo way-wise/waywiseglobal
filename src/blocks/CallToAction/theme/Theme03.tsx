@@ -22,7 +22,7 @@ export const CTATheme03: React.FC<
                     {/* image - start */}
                     <div className="order-first h-48 w-full bg-gray-300 sm:order-none sm:h-auto sm:w-1/2 lg:w-2/5">
                         {backgroundImage && (
-                            <Media priority resource={backgroundImage} imgClassName="h-full w-full object-cover object-center" />
+                            <Media resource={backgroundImage} imgClassName="h-full w-full object-cover object-center" />
                         )}
                     </div>
                     {/* image - end */}

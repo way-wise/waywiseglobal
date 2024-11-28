@@ -37,7 +37,7 @@ export const FeatureSection: React.FC<Props> = (props) => {
             {abstructImageTop && typeof abstructImageTop === 'object' && (
               <div className="absolute top-0 left-0">
                 <React.Fragment>
-                  <Media priority resource={abstructImageTop} imgClassName="" />
+                  <Media resource={abstructImageTop} imgClassName="" />
                 </React.Fragment>
               </div>
             )}
@@ -46,7 +46,6 @@ export const FeatureSection: React.FC<Props> = (props) => {
                 <React.Fragment>
                   <Media
                     fill
-                    priority
                     resource={featureImage1}
                     imgClassName="object-cover rounded-2xl"
                   />
@@ -58,7 +57,6 @@ export const FeatureSection: React.FC<Props> = (props) => {
                 <React.Fragment>
                   <Media
                     fill
-                    priority
                     resource={featureImage2}
                     imgClassName="object-cover rounded-2xl"
                   />
@@ -71,7 +69,7 @@ export const FeatureSection: React.FC<Props> = (props) => {
                 style={{ animation: 'float 6s ease-in-out infinite' }}
               >
                 <React.Fragment>
-                  <Media priority resource={abstructImageBottom} />
+                  <Media resource={abstructImageBottom} />
                 </React.Fragment>
               </div>
             )}

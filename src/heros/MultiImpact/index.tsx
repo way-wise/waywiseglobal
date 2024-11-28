@@ -25,7 +25,7 @@ export const MultiImpactHero: React.FC<Page['hero']> = ({
 
   return (
     <div
-      className="relative -mt-[4.2rem] flex items-center justify-center text-dark"
+      className="relative flex items-center justify-center text-dark"
       data-theme="dark"
     >
       <div className="container mb-8 z-10 relative flex flex-col lg:flex-row xl:flex-col items-center gap-5">
