@@ -19,11 +19,13 @@ import { TeamBlock } from '@/blocks/TeamBlock/Component'
 import { TestimonialBlock } from '@/blocks/TestimonialBlock/Component'
 import { HeadingBlock } from '@/blocks/HeadingBlock/Component'
 import { SpacerBlock } from '@/blocks/SpacerBlock/Component'
+import { Callout } from '@/blocks/Callout/Component'
 
 const blockComponents = {
   archive: ArchiveBlock,
   content: ContentBlock,
   cta: CallToActionBlock,
+  callout: Callout,
   formBlock: FormBlock,
   mediaBlock: MediaBlock,
   mediaContentSection: MediaContentSection,

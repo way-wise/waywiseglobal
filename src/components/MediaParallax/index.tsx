@@ -1,3 +1,5 @@
+'use client'
+
 import React, { HTMLAttributes } from 'react'
 import { motion, MotionProps, transform, useScroll } from 'framer-motion'
 
