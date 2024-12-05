@@ -5,7 +5,7 @@ import { BackgroundScanline } from '@/components/BackgroundScanline'
 import { SquareCardProps } from '../types.js'
 
 import classes from './index.module.scss'
-import { CMSLink } from '@/components/Link/index.jsx'
+import { CMSLink } from '@/components/Link'
 
 export const SquareCard: React.FC<SquareCardProps> = props => {
   const { title, className, leader, description, revealDescription, enableLink } = props

@@ -19,13 +19,12 @@ import { TeamBlock } from '@/blocks/TeamBlock/Component'
 import { TestimonialBlock } from '@/blocks/TestimonialBlock/Component'
 import { HeadingBlock } from '@/blocks/HeadingBlock/Component'
 import { SpacerBlock } from '@/blocks/SpacerBlock/Component'
-import { Callout } from '@/blocks/Callout/Component'
+import { ReusableContentBlock } from './ReusableContent/Component'
 
 const blockComponents = {
   archive: ArchiveBlock,
   content: ContentBlock,
   cta: CallToActionBlock,
-  callout: Callout,
   formBlock: FormBlock,
   mediaBlock: MediaBlock,
   mediaContentSection: MediaContentSection,
@@ -40,34 +39,39 @@ const blockComponents = {
   testimonial: TestimonialBlock,
   headingBlock: HeadingBlock,
   SpacerBlock: SpacerBlock,
+  reusableContentBlock: ReusableContentBlock,
 }
+
 
 export const RenderBlocks: React.FC<{
   blocks: Page['layout'][0][]
+  customId?: string | null
 }> = (props) => {
-  const { blocks } = props
+  const { blocks, customId } = props
 
   const hasBlocks = blocks && Array.isArray(blocks) && blocks.length > 0
 
   if (hasBlocks) {
     return (
       <Fragment>
-        {blocks.map((block, index) => {
-          const { blockType } = block
+        <div id={customId ?? undefined}>
+          {blocks.map((block, index) => {
+            const { blockType } = block
 
-          if (blockType && blockType in blockComponents) {
-            const Block = blockComponents[blockType]
+            if (blockType && blockType in blockComponents) {
+              const Block = blockComponents[blockType]
 
-            if (Block) {
-              return (
-                <div className="my-0" key={index}>
-                  <Block {...block} />
-                </div>
-              )
+              if (Block) {
+                return (
+                  <div className="my-0" key={index}>
+                    <Block {...block} />
+                  </div>
+                )
+              }
             }
-          }
-          return null
-        })}
+            return null
+          })}
+        </div>
       </Fragment>
     )
   }

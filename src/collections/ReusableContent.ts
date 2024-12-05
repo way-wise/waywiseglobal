@@ -1,21 +1,6 @@
 import type { CollectionConfig } from 'payload'
 
 import { Banner } from '@/blocks/Banner/config'
-import { BlogContent } from '@/blocks/BlogContent/config'
-import { CallToAction } from '@/blocks/CallToAction/config'
-import { Callout } from '@/blocks/Callout/config'
-import { CardGrid } from '@/blocks/CardGrid/config'
-import { Code } from '@/blocks/Code/config'
-import { CodeFeature } from '@/blocks/CodeFeature/config'
-import { Content } from '@/blocks/Content/config'
-import { ContentGrid } from '@/blocks/ContentGrid/config'
-import { HoverHighlights } from '@/blocks/HoverHighlights/config'
-import { LogoGrid } from '@/blocks/LogoGrid/config'
-import { MediaContentAccordion } from '@/blocks/MediaContentAccordion/config'
-import { Slider } from '@/blocks/Slider/config'
-import { Statement } from '@/blocks/Statement/config'
-import { Steps } from '@/blocks/Steps'
-import { StickyHighlights } from '@/blocks/StickyHighlights/config'
 import { admins } from '@/access/admins'
 import { MediaBlock } from '@/blocks/MediaBlock/config'
 import { Archive } from '@/blocks/ArchiveBlock/config'
@@ -32,6 +17,8 @@ import { TeamBlock } from '@/blocks/TeamBlock/config'
 import { TestimonialBlock } from '@/blocks/TestimonialBlock/config'
 import { HeadingBlock } from '@/blocks/HeadingBlock/config'
 import { SpacerBlock } from '@/blocks/SpacerBlock/config'
+import { Code } from '@/blocks/Code/config'
+import { Content } from '@/blocks/Content/config'
 
 export const ReusableContent: CollectionConfig = {
   slug: 'reusable-content',
@@ -56,20 +43,7 @@ export const ReusableContent: CollectionConfig = {
       type: 'blocks',
       blocks: [
         Banner,
-        BlogContent,
-        Callout,
-        CallToAction,
-        CardGrid,
         Code,
-        CodeFeature,
-        ContentGrid,
-        HoverHighlights,
-        LogoGrid,
-        MediaContentAccordion,
-        Slider,
-        Statement,
-        Steps,
-        StickyHighlights,
         Content,
         MediaBlock,
         Archive,

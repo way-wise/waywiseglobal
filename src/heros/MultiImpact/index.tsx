@@ -24,8 +24,8 @@ export const MultiImpactHero: React.FC<Page['hero']> = ({
   })
 
   return (
-    <div className="relative flex items-center justify-center text-dark" data-theme="dark">
-      <div className="container mb-8 z-10 relative flex flex-col lg:flex-row xl:flex-col items-center gap-5">
+    <div className="relative -mt-[7em] flex items-center justify-center text-dark" data-theme="dark">
+      <div className="container my-8 pt-14 z-10 relative flex flex-col lg:flex-row xl:flex-col items-center gap-5">
         <div className="flex xl:hidden max-w-[36.5rem] text-center flex-grow w-full">
           {richText && <RichText className="mb-6" content={richText} enableGutter={false} />}
           {Array.isArray(links) && links.length > 0 && (
@@ -42,19 +42,19 @@ export const MultiImpactHero: React.FC<Page['hero']> = ({
         </div>
         <div className="flex flex-col items-center justify-center gap-10 w-full">
           {imagesTop && (
-            <div className="w-full xl:w-[80%] flex justify-between items-center gap-5">
+            <div className="w-full xl:w-[85%] flex justify-between items-center gap-5">
               {imagesTop.map((imgItem, index) => (
                 <Link
                   href={imgItem.url || '/'}
                   key={imgItem.id}
                   target="_blank"
-                  className={`flex flex-col gap-3 justify-center items-center h-40 w-52 xl:h-52 xl:w-72 bg-slate-50/40 p-5 rounded-xl backdrop-blur-sm group hover:bg-slate-50/60
+                  className={`flex flex-col gap-2 justify-center items-center h-40 w-52 xl:h-52 xl:w-72 bg-slate-50/40 p-5 rounded-xl backdrop-blur-sm group hover:bg-slate-50/60
                     ${imagesTop.length === 3 && index === 1 ? 'translate-y-0 xl:-translate-y-8' : ''}
                     `}
                 >
                   <Media
                     resource={imgItem?.image as MediaType}
-                    imgClassName="object-contain size-32 group-hover:scale-110 transition"
+                    imgClassName="object-contain w-36 group-hover:scale-110 transition"
                   />
                   {imgItem?.image && typeof imgItem?.image === 'object' && (
                     <RichText
@@ -74,11 +74,11 @@ export const MultiImpactHero: React.FC<Page['hero']> = ({
                   <Link
                     href={imagesMiddle[0].url || '/'}
                     target="_blank"
-                    className="flex flex-col gap-3 justify-center items-center h-40 w-52 xl:h-52 xl:w-72 bg-slate-50/40 p-5 rounded-xl backdrop-blur-sm group hover:bg-slate-50/60"
+                    className="flex flex-col gap-2 justify-center items-center h-40 w-52 xl:h-52 xl:w-72 bg-slate-50/40 p-5 rounded-xl backdrop-blur-sm group hover:bg-slate-50/60"
                   >
                     <Media
                       resource={imagesMiddle[0]?.image as MediaType}
-                      imgClassName="object-contain size-32 group-hover:scale-110 transition"
+                      imgClassName="object-contain w-36 group-hover:scale-110 transition"
                     />
                     {imagesMiddle[0]?.image && typeof imagesMiddle[0]?.image === 'object' && (
                       <RichText
@@ -112,11 +112,11 @@ export const MultiImpactHero: React.FC<Page['hero']> = ({
                     href={imagesMiddle[1].url || '/'}
                     key={imagesMiddle[1].id}
                     target="_blank"
-                    className="flex flex-col gap-3 justify-center items-center h-40 w-52 xl:h-52 xl:w-72 bg-slate-50/40 p-5 rounded-xl backdrop-blur-sm group hover:bg-slate-50/60"
+                    className="flex flex-col gap-2 justify-between items-center h-40 w-52 xl:h-52 xl:w-72 bg-slate-50/40 p-5 rounded-xl backdrop-blur-sm group hover:bg-slate-50/60"
                   >
                     <Media
                       resource={imagesMiddle[1]?.image as MediaType}
-                      imgClassName="object-contain size-32 group-hover:scale-110 transition"
+                      imgClassName="object-contain w-36 group-hover:scale-110 transition"
                     />
                     {imagesMiddle[1]?.image && typeof imagesMiddle[1]?.image === 'object' && (
                       <RichText
@@ -131,19 +131,19 @@ export const MultiImpactHero: React.FC<Page['hero']> = ({
             )}
           </div>
           {imagesBottom && (
-            <div className="w-full xl:w-[70%] flex justify-between items-center gap-5">
+            <div className="w-full xl:w-[75%] flex justify-between items-center gap-5">
               {imagesBottom.map((imgItem, index) => (
                 <Link
                   href={imgItem.url || '/'}
                   key={imgItem.id}
                   target="_blank"
-                  className={`flex flex-col gap-3 justify-center items-center h-40 w-52 xl:h-52 xl:w-72 bg-slate-50/40 p-5 rounded-xl backdrop-blur-sm group hover:bg-slate-50/60
+                  className={`flex flex-col gap-2 justify-center items-center h-40 w-52 xl:h-52 xl:w-72 bg-slate-50/40 p-5 rounded-xl backdrop-blur-sm group hover:bg-slate-50/60
                     ${imagesBottom.length === 3 && index === 1 ? 'translate-y-0 xl:translate-y-8' : ''}
                     `}
                 >
                   <Media
                     resource={imgItem?.image as MediaType}
-                    imgClassName="object-contain size-32 group-hover:scale-110 transition"
+                    imgClassName="object-contain w-36 group-hover:scale-110 transition"
                   />
                   {imgItem?.image && typeof imgItem?.image === 'object' && (
                     <RichText
@@ -158,7 +158,7 @@ export const MultiImpactHero: React.FC<Page['hero']> = ({
           )}
         </div>
       </div>
-      <div className="min-h-[90vh] select-none">
+      <div className="min-h-screen select-none">
         {media && typeof media === 'object' && (
           <Media
             fill

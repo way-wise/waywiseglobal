@@ -33,18 +33,7 @@ import { TeamBlock } from '@/blocks/TeamBlock/config'
 import { TestimonialBlock } from '@/blocks/TestimonialBlock/config'
 import { HeadingBlock } from '@/blocks/HeadingBlock/config'
 import { SpacerBlock } from '@/blocks/SpacerBlock/config'
-import { Callout } from '@/blocks/Callout/config'
-import { CardGrid } from '@/blocks/CardGrid/config'
-import { CodeFeature } from '@/blocks/CodeFeature/config'
-import { ContentGrid } from '@/blocks/ContentGrid/config'
-import { HoverHighlights } from '@/blocks/HoverHighlights/config'
-import { LogoGrid } from '@/blocks/LogoGrid/config'
-import { MediaContentAccordion } from '@/blocks/MediaContentAccordion/config'
 import { ReusableContent } from '@/blocks/ReusableContent/config'
-import { Slider } from '@/blocks/Slider/config'
-import { Statement } from '@/blocks/Statement/config'
-import { Steps } from '@/blocks/Steps'
-import { StickyHighlights } from '@/blocks/StickyHighlights/config'
 
 export const Pages: CollectionConfig = {
   slug: 'pages',
@@ -118,18 +107,7 @@ export const Pages: CollectionConfig = {
                 TestimonialBlock,
                 HeadingBlock,
                 SpacerBlock,
-                Callout,
-                CardGrid,
-                CodeFeature,
-                ContentGrid,
-                HoverHighlights,
-                LogoGrid,
-                MediaContentAccordion,
                 ReusableContent,
-                Slider,
-                Statement,
-                Steps,
-                StickyHighlights,
               ],
               required: true,
             },
