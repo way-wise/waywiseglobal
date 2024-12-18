@@ -150,6 +150,7 @@ export interface Page {
     | FormBlock
     | MediaContentSection
     | ServiceSection
+    | PlatformSection
     | MediaSection
     | FeatureSection
     | MapEmbed
@@ -733,6 +734,66 @@ export interface ServiceSection {
   id?: string | null;
   blockName?: string | null;
   blockType: 'serviceSection';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "PlatformSection".
+ */
+export interface PlatformSection {
+  intro?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  column: number;
+  fixedBackground?: boolean | null;
+  platforms?:
+    | {
+        title: string;
+        richText?: {
+          root: {
+            type: string;
+            children: {
+              type: string;
+              version: number;
+              [k: string]: unknown;
+            }[];
+            direction: ('ltr' | 'rtl') | null;
+            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+            indent: number;
+            version: number;
+          };
+          [k: string]: unknown;
+        } | null;
+        enableLink?: boolean | null;
+        link?: {
+          type?: ('reference' | 'custom') | null;
+          newTab?: boolean | null;
+          reference?: {
+            relationTo: 'pages';
+            value: string | Page;
+          } | null;
+          url?: string | null;
+          label: string;
+        };
+        contentImage: string | Media;
+        id?: string | null;
+      }[]
+    | null;
+  backgroundImage?: (string | null) | Media;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'platformSection';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1424,6 +1485,34 @@ export interface PagesSelect<T extends boolean = true> {
                 | T
                 | {
                     alignment?: T;
+                    richText?: T;
+                    enableLink?: T;
+                    link?:
+                      | T
+                      | {
+                          type?: T;
+                          newTab?: T;
+                          reference?: T;
+                          url?: T;
+                          label?: T;
+                        };
+                    contentImage?: T;
+                    id?: T;
+                  };
+              backgroundImage?: T;
+              id?: T;
+              blockName?: T;
+            };
+        platformSection?:
+          | T
+          | {
+              intro?: T;
+              column?: T;
+              fixedBackground?: T;
+              platforms?:
+                | T
+                | {
+                    title?: T;
                     richText?: T;
                     enableLink?: T;
                     link?:

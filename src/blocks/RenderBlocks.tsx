@@ -20,6 +20,7 @@ import { TestimonialBlock } from '@/blocks/TestimonialBlock/Component'
 import { HeadingBlock } from '@/blocks/HeadingBlock/Component'
 import { SpacerBlock } from '@/blocks/SpacerBlock/Component'
 import { ReusableContentBlock } from './ReusableContent/Component'
+import { PlatformSection } from './PlatformSection/Component'
 
 const blockComponents = {
   archive: ArchiveBlock,
@@ -29,6 +30,7 @@ const blockComponents = {
   mediaBlock: MediaBlock,
   mediaContentSection: MediaContentSection,
   serviceSection: ServiceSection,
+  platformSection: PlatformSection,
   mediaSection: MediaSection,
   featureSection: FeatureSection,
   mapEmbed: MapEmbed,

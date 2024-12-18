@@ -105,7 +105,7 @@ const HeaderClient: React.FC<HeaderClientProps> = ({ header }) => {
   return (
     <header
       className={`header left-0 top-0 z-40 w-full backdrop-blur-lg ${header?.sticky || header?.fixedTop ? ' sticky' : ''}
-        transition ${sticky ? 'bg-white shadow-sm' : 'bg-gray-500/60'}`}
+        transition ${sticky ? 'bg-white shadow-sm' : 'bg-gray-300/60'}`}
     >
       {header?.callback && (
         <div className="block xl:hidden bg-black/90 backdrop-blur py-1.5">
