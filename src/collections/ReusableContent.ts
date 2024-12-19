@@ -19,6 +19,8 @@ import { HeadingBlock } from '@/blocks/HeadingBlock/config'
 import { SpacerBlock } from '@/blocks/SpacerBlock/config'
 import { Code } from '@/blocks/Code/config'
 import { Content } from '@/blocks/Content/config'
+import { CallToAction } from '@/blocks/CallToAction/config'
+import { PlatformSection } from '@/blocks/PlatformSection/config'
 
 export const ReusableContent: CollectionConfig = {
   slug: 'reusable-content',
@@ -42,14 +44,14 @@ export const ReusableContent: CollectionConfig = {
       name: 'layout',
       type: 'blocks',
       blocks: [
-        Banner,
-        Code,
+        CallToAction,
         Content,
         MediaBlock,
         Archive,
         FormBlock,
         MediaContentSection,
         ServiceSection,
+        PlatformSection,
         MediaSection,
         FeatureSection,
         MapEmbed,
@@ -59,7 +61,7 @@ export const ReusableContent: CollectionConfig = {
         TeamBlock,
         TestimonialBlock,
         HeadingBlock,
-        SpacerBlock
+        SpacerBlock,
       ],
       required: true,
     },

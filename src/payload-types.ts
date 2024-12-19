@@ -1124,14 +1124,14 @@ export interface ReusableContent {
   id: string;
   title: string;
   layout: (
-    | BannerBlock
-    | CodeBlock
+    | CallToActionBlock
     | ContentBlock
     | MediaBlock
     | ArchiveBlock
     | FormBlock
     | MediaContentSection
     | ServiceSection
+    | PlatformSection
     | MediaSection
     | FeatureSection
     | MapEmbed
@@ -1145,42 +1145,6 @@ export interface ReusableContent {
   )[];
   updatedAt: string;
   createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "BannerBlock".
- */
-export interface BannerBlock {
-  style: 'info' | 'warning' | 'error' | 'success';
-  content: {
-    root: {
-      type: string;
-      children: {
-        type: string;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  };
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'banner';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "CodeBlock".
- */
-export interface CodeBlock {
-  language?: ('typescript' | 'javascript' | 'css') | null;
-  code: string;
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'code';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1854,19 +1818,28 @@ export interface ReusableContentSelect<T extends boolean = true> {
   layout?:
     | T
     | {
-        banner?:
+        cta?:
           | T
           | {
-              style?: T;
-              content?: T;
-              id?: T;
-              blockName?: T;
-            };
-        code?:
-          | T
-          | {
-              language?: T;
-              code?: T;
+              theme?: T;
+              richText?: T;
+              links?:
+                | T
+                | {
+                    link?:
+                      | T
+                      | {
+                          type?: T;
+                          newTab?: T;
+                          reference?: T;
+                          url?: T;
+                          label?: T;
+                          appearance?: T;
+                        };
+                    id?: T;
+                  };
+              backgroundImage?: T;
+              backgroundColor?: T;
               id?: T;
               blockName?: T;
             };
@@ -1961,6 +1934,34 @@ export interface ReusableContentSelect<T extends boolean = true> {
                 | T
                 | {
                     alignment?: T;
+                    richText?: T;
+                    enableLink?: T;
+                    link?:
+                      | T
+                      | {
+                          type?: T;
+                          newTab?: T;
+                          reference?: T;
+                          url?: T;
+                          label?: T;
+                        };
+                    contentImage?: T;
+                    id?: T;
+                  };
+              backgroundImage?: T;
+              id?: T;
+              blockName?: T;
+            };
+        platformSection?:
+          | T
+          | {
+              intro?: T;
+              column?: T;
+              fixedBackground?: T;
+              platforms?:
+                | T
+                | {
+                    title?: T;
                     richText?: T;
                     enableLink?: T;
                     link?:
@@ -2583,6 +2584,42 @@ export interface FooterSelect<T extends boolean = true> {
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "BannerBlock".
+ */
+export interface BannerBlock {
+  style: 'info' | 'warning' | 'error' | 'success';
+  content: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'banner';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "CodeBlock".
+ */
+export interface CodeBlock {
+  language?: ('typescript' | 'javascript' | 'css') | null;
+  code: string;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'code';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

@@ -1,121 +1,82 @@
 'use client'
-/* eslint-disable no-param-reassign */
-import React, { useCallback } from 'react'
-import { Highlight } from 'prism-react-renderer'
-import { theme } from './theme.js'
+import { cn } from '@/utilities/cn'
+import useClickableCard from '@/utilities/useClickableCard'
+import Link from 'next/link'
+import React, { Fragment } from 'react'
 
-import CodeBlip from '@/components/CodeBlip'
-import { Props } from './types'
+import type { Post } from '@/payload-types'
 
-import classes from './index.module.scss'
+import { Media } from '@/components/Media'
 
-let highlightStart = false
-const highlightClassName = 'highlight-line'
+export const Card: React.FC<{
+  alignItems?: 'center'
+  className?: string
+  doc?: Post
+  relationTo?: 'posts'
+  showCategories?: boolean
+  title?: string
+}> = (props) => {
+  const { card, link } = useClickableCard({})
+  const { className, doc, relationTo, showCategories, title: titleFromProps } = props
 
-const highlightLine = (lineArray: { content: string }[], lineProps: { className: string }) => {
-  let shouldExclude = false
+  const { slug, categories, meta, title } = doc || {}
+  const { description, image: metaImage } = meta || {}
 
-  lineArray.forEach((line) => {
-    const { content } = line
-    const lineContent = content.replace(/\s/g, '')
-
-    // Highlight lines with "// highlight-line"
-    if (lineContent.includes('//highlight-line')) {
-      lineProps.className = `${lineProps.className} ${highlightClassName}`
-      line.content = content.replace('// highlight-line', '').replace('//highlight-line', '')
-    }
-
-    // Stop highlighting
-    if (!!highlightStart && lineContent === '//highlight-end') {
-      highlightStart = false
-      shouldExclude = true
-    }
-
-    // Start highlighting after "//highlight-start"
-    if (lineContent === '//highlight-start') {
-      highlightStart = true
-      shouldExclude = true
-    }
-  })
-
-  // Highlight lines between //highlight-start & //highlight-end
-  if (highlightStart) {
-    lineProps.className = `${lineProps.className} ${highlightClassName}`
-  }
-
-  return shouldExclude
-}
-
-const Code: React.FC<Props> = (props) => {
-  const {
-    children,
-    className,
-    codeBlips,
-    disableMinHeight,
-    showLineNumbers = true,
-    parentClassName,
-  } = props
-  const classNames = [classes.code, 'code-block', className && className].filter(Boolean).join(' ')
-
-  const getCodeBlip = useCallback(
-    (rowNumber: number) => {
-      if (!codeBlips) return null
-      return codeBlips.find((blip) => blip.row === rowNumber) ?? null
-    },
-    [codeBlips],
-  )
-
-  let blipCounter = 0
+  const hasCategories = categories && Array.isArray(categories) && categories.length > 0
+  const titleToUse = titleFromProps || title
+  const sanitizedDescription = description?.replace(/\s/g, ' ') // replace non-breaking space with white space
+  const href = `/${relationTo}/${slug}`
 
   return (
-    <div
-      className={[
-        classes.codeWrap,
-        disableMinHeight && classes.disableMinHeight,
-        parentClassName && parentClassName,
-      ]
-        .filter(Boolean)
-        .join(' ')}
-      data-theme={'dark'}
+    <article
+      className={cn(
+        'border border-border rounded-lg overflow-hidden bg-card hover:cursor-pointer',
+        className,
+      )}
+      ref={card.ref}
     >
-      <Highlight theme={theme} code={children} language="jsx">
-        {({ style, tokens, getLineProps, getTokenProps }) => (
-          <div className={classNames} style={style}>
-            {tokens
-              .map((line, i) => {
-                const lineProps = getLineProps({ line, key: i, className: classes.line })
-                const shouldExclude = highlightLine(line, lineProps)
-                return {
-                  line,
-                  lineProps,
-                  shouldExclude,
-                }
-              })
-              .filter(({ shouldExclude }) => !shouldExclude)
-              .map(({ line, lineProps }, i) => {
-                const rowNumber = i + 1
-                const codeBlip = getCodeBlip(rowNumber)
-                if (codeBlip) blipCounter = blipCounter + 1
-                return (
-                  <div {...lineProps} key={i}>
-                    <>
-                      {showLineNumbers && <span className={classes.lineNumber}>{rowNumber}</span>}
-                      <div className={classes.lineCodeWrapper}>
-                        {line.map((token, index) => {
-                          const { key, ...rest } = getTokenProps({ token, key: index })
-                          return <span key={key as any} {...rest} />
-                        })}
-                        {codeBlip ? <CodeBlip.Button index={blipCounter} blip={codeBlip} /> : null}
-                      </div>
-                    </>
-                  </div>
-                )
-              })}
+      <div className="relative w-full ">
+        {!metaImage && <div className="">No image</div>}
+        {metaImage && typeof metaImage !== 'string' && <Media resource={metaImage} size="33vw" />}
+      </div>
+      <div className="p-4">
+        {showCategories && hasCategories && (
+          <div className="uppercase text-sm mb-4">
+            {showCategories && hasCategories && (
+              <div>
+                {categories?.map((category, index) => {
+                  if (typeof category === 'object') {
+                    const { title: titleFromCategory } = category
+
+                    const categoryTitle = titleFromCategory || 'Untitled category'
+
+                    const isLast = index === categories.length - 1
+
+                    return (
+                      <Fragment key={index}>
+                        {categoryTitle}
+                        {!isLast && <Fragment>, &nbsp;</Fragment>}
+                      </Fragment>
+                    )
+                  }
+
+                  return null
+                })}
+              </div>
+            )}
           </div>
         )}
-      </Highlight>
-    </div>
+        {titleToUse && (
+          <div className="prose">
+            <h3>
+              <Link className="not-prose" href={href} ref={link.ref}>
+                {titleToUse}
+              </Link>
+            </h3>
+          </div>
+        )}
+        {description && <div className="mt-2">{description && <p>{sanitizedDescription}</p>}</div>}
+      </div>
+    </article>
   )
 }
-
-export default Code

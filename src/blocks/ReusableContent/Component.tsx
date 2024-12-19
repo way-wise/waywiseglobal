@@ -1,12 +1,12 @@
 import React from 'react'
 
 
-import { Page } from '@/payload-types.js'
 import { RenderBlocks } from '../RenderBlocks'
+import { Page } from '@/payload-types'
 
-import type { ReusableContentBlock as ReusableContentBlockProps } from '@/payload-types'
+export type Props = Extract<Page['layout'][0], { blockType: 'reusableContentBlock' }>
 
-export const ReusableContentBlock: React.FC<ReusableContentBlockProps> = ({ reusableContentBlockFields }) => {
+export const ReusableContentBlock: React.FC<Props> = ({ reusableContentBlockFields }) => {
   const { reusableContent, customId } = reusableContentBlockFields
 
   if (typeof reusableContent === 'object' && reusableContent !== null) {
