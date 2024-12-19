@@ -43,7 +43,6 @@ export const ServiceSection: React.FC<Props> = (props) => {
                     <React.Fragment>
                       <Media
                         fill
-                        priority
                         resource={service?.contentImage}
                         imgClassName="object-cover"
                       />

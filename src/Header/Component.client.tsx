@@ -105,7 +105,7 @@ const HeaderClient: React.FC<HeaderClientProps> = ({ header }) => {
   return (
     <header
       className={`header left-0 top-0 z-40 w-full backdrop-blur-lg ${header?.sticky || header?.fixedTop ? ' sticky' : ''}
-        transition ${sticky ? 'bg-white shadow-sm' : 'bg-gray-500/60'}`}
+        transition ${sticky ? 'bg-white shadow-sm' : 'bg-gray-300/60'}`}
     >
       {header?.callback && (
         <div className="block xl:hidden bg-black/90 backdrop-blur py-1.5">
@@ -182,15 +182,13 @@ const HeaderClient: React.FC<HeaderClientProps> = ({ header }) => {
               <nav className="hidden lg:block">
                 <ul className="flex space-x-8">
                   {navItems.map((menuItem, index) => (
-                    <li key={index} className="group relative">
+                    <li key={index} className={`group relative ${sticky ? 'text-dark' : 'text-white'}`}>
                       {menuItem.subNavItems && menuItem.subNavItems.length === 0 ? (
                         <>
                           <CMSLink
                             {...menuItem?.link}
                             appearance="link"
-                            className={`font-medium block py-2 text-base lg:mr-0 lg:px-0 lg:py-6 no-underline hover:text-primary ${
-                              sticky ? 'text-dark' : 'text-white'
-                            } hover:text-primary ${pathname === menuItem?.link?.url ? 'text-primary' : ''}`}
+                            className={`font-medium block py-2 text-base lg:mr-0 lg:px-0 lg:py-6 no-underline ${sticky ? 'text-dark' : 'text-white'} hover:text-primary`}
                           />
                         </>
                       ) : (

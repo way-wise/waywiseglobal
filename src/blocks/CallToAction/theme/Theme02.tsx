@@ -34,7 +34,7 @@ export const CTATheme02: React.FC<
                     {backgroundImage && (
                         <>
                             <div className="order-first h-48 w-full bg-gray-700 sm:order-none sm:h-auto sm:w-1/2 lg:w-3/5">
-                                <Media priority resource={backgroundImage} imgClassName="h-full w-full object-cover object-center" />
+                                <Media resource={backgroundImage} imgClassName="h-full w-full object-cover object-center" />
                             </div>
                         </>
                     )}

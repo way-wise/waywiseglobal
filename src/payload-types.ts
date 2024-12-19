@@ -15,6 +15,7 @@ export interface Config {
     posts: Post;
     media: Media;
     categories: Category;
+    'reusable-content': ReusableContent;
     users: User;
     redirects: Redirect;
     forms: Form;
@@ -30,6 +31,7 @@ export interface Config {
     posts: PostsSelect<false> | PostsSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
+    'reusable-content': ReusableContentSelect<false> | ReusableContentSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
     redirects: RedirectsSelect<false> | RedirectsSelect<true>;
     forms: FormsSelect<false> | FormsSelect<true>;
@@ -148,6 +150,7 @@ export interface Page {
     | FormBlock
     | MediaContentSection
     | ServiceSection
+    | PlatformSection
     | MediaSection
     | FeatureSection
     | MapEmbed
@@ -158,6 +161,18 @@ export interface Page {
     | TestimonialBlock
     | HeadingBlock
     | SpacerBlock
+    | {
+        reusableContentBlockFields: {
+          settings?: {
+            theme?: ('light' | 'dark') | null;
+          };
+          reusableContent: string | ReusableContent;
+          customId?: string | null;
+        };
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'reusableContentBlock';
+      }
   )[];
   meta?: {
     title?: string | null;
@@ -453,6 +468,24 @@ export interface FormBlock {
     };
     [k: string]: unknown;
   } | null;
+  position?: ('default' | 'fullscreen') | null;
+  size?: ('oneThird' | 'half' | 'twoThirds' | 'oneFourth' | 'threeFourths' | 'full') | null;
+  alignment?: ('contentForm' | 'formContent') | null;
+  content?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
   id?: string | null;
   blockName?: string | null;
   blockType: 'formBlock';
@@ -719,6 +752,66 @@ export interface ServiceSection {
   id?: string | null;
   blockName?: string | null;
   blockType: 'serviceSection';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "PlatformSection".
+ */
+export interface PlatformSection {
+  intro?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  column: number;
+  fixedBackground?: boolean | null;
+  platforms?:
+    | {
+        title: string;
+        richText?: {
+          root: {
+            type: string;
+            children: {
+              type: string;
+              version: number;
+              [k: string]: unknown;
+            }[];
+            direction: ('ltr' | 'rtl') | null;
+            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+            indent: number;
+            version: number;
+          };
+          [k: string]: unknown;
+        } | null;
+        enableLink?: boolean | null;
+        link?: {
+          type?: ('reference' | 'custom') | null;
+          newTab?: boolean | null;
+          reference?: {
+            relationTo: 'pages';
+            value: string | Page;
+          } | null;
+          url?: string | null;
+          label: string;
+        };
+        contentImage: string | Media;
+        id?: string | null;
+      }[]
+    | null;
+  backgroundImage?: (string | null) | Media;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'platformSection';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1025,6 +1118,36 @@ export interface SpacerBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "reusable-content".
+ */
+export interface ReusableContent {
+  id: string;
+  title: string;
+  layout: (
+    | CallToActionBlock
+    | ContentBlock
+    | MediaBlock
+    | ArchiveBlock
+    | FormBlock
+    | MediaContentSection
+    | ServiceSection
+    | PlatformSection
+    | MediaSection
+    | FeatureSection
+    | MapEmbed
+    | FaqBlock
+    | BreadcrumbBlock
+    | PricingBlock
+    | TeamBlock
+    | TestimonialBlock
+    | HeadingBlock
+    | SpacerBlock
+  )[];
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "redirects".
  */
 export interface Redirect {
@@ -1113,6 +1236,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'categories';
         value: string | Category;
+      } | null)
+    | ({
+        relationTo: 'reusable-content';
+        value: string | ReusableContent;
       } | null)
     | ({
         relationTo: 'users';
@@ -1306,6 +1433,10 @@ export interface PagesSelect<T extends boolean = true> {
               form?: T;
               enableIntro?: T;
               introContent?: T;
+              position?: T;
+              size?: T;
+              alignment?: T;
+              content?: T;
               id?: T;
               blockName?: T;
             };
@@ -1340,6 +1471,34 @@ export interface PagesSelect<T extends boolean = true> {
                 | T
                 | {
                     alignment?: T;
+                    richText?: T;
+                    enableLink?: T;
+                    link?:
+                      | T
+                      | {
+                          type?: T;
+                          newTab?: T;
+                          reference?: T;
+                          url?: T;
+                          label?: T;
+                        };
+                    contentImage?: T;
+                    id?: T;
+                  };
+              backgroundImage?: T;
+              id?: T;
+              blockName?: T;
+            };
+        platformSection?:
+          | T
+          | {
+              intro?: T;
+              column?: T;
+              fixedBackground?: T;
+              platforms?:
+                | T
+                | {
+                    title?: T;
                     richText?: T;
                     enableLink?: T;
                     link?:
@@ -1531,6 +1690,23 @@ export interface PagesSelect<T extends boolean = true> {
               id?: T;
               blockName?: T;
             };
+        reusableContentBlock?:
+          | T
+          | {
+              reusableContentBlockFields?:
+                | T
+                | {
+                    settings?:
+                      | T
+                      | {
+                          theme?: T;
+                        };
+                    reusableContent?: T;
+                    customId?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
       };
   meta?:
     | T
@@ -1629,6 +1805,354 @@ export interface CategoriesSelect<T extends boolean = true> {
         url?: T;
         label?: T;
         id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "reusable-content_select".
+ */
+export interface ReusableContentSelect<T extends boolean = true> {
+  title?: T;
+  layout?:
+    | T
+    | {
+        cta?:
+          | T
+          | {
+              theme?: T;
+              richText?: T;
+              links?:
+                | T
+                | {
+                    link?:
+                      | T
+                      | {
+                          type?: T;
+                          newTab?: T;
+                          reference?: T;
+                          url?: T;
+                          label?: T;
+                          appearance?: T;
+                        };
+                    id?: T;
+                  };
+              backgroundImage?: T;
+              backgroundColor?: T;
+              id?: T;
+              blockName?: T;
+            };
+        content?:
+          | T
+          | {
+              columns?:
+                | T
+                | {
+                    size?: T;
+                    richText?: T;
+                    enableLink?: T;
+                    link?:
+                      | T
+                      | {
+                          type?: T;
+                          newTab?: T;
+                          reference?: T;
+                          url?: T;
+                          label?: T;
+                          appearance?: T;
+                        };
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        mediaBlock?:
+          | T
+          | {
+              position?: T;
+              media?: T;
+              id?: T;
+              blockName?: T;
+            };
+        archive?:
+          | T
+          | {
+              theme?: T;
+              background?: T;
+              fixedBackground?: T;
+              introContent?: T;
+              populateBy?: T;
+              relationTo?: T;
+              categories?: T;
+              limit?: T;
+              selectedDocs?: T;
+              id?: T;
+              blockName?: T;
+            };
+        formBlock?:
+          | T
+          | {
+              form?: T;
+              enableIntro?: T;
+              introContent?: T;
+              position?: T;
+              size?: T;
+              alignment?: T;
+              content?: T;
+              id?: T;
+              blockName?: T;
+            };
+        mediaContentSection?:
+          | T
+          | {
+              alignment?: T;
+              mediaHeight?: T;
+              richText?: T;
+              enableLink?: T;
+              link?:
+                | T
+                | {
+                    type?: T;
+                    newTab?: T;
+                    reference?: T;
+                    url?: T;
+                    label?: T;
+                  };
+              contentImage?: T;
+              backgroundImage?: T;
+              id?: T;
+              blockName?: T;
+            };
+        serviceSection?:
+          | T
+          | {
+              intro?: T;
+              column?: T;
+              fixedBackground?: T;
+              services?:
+                | T
+                | {
+                    alignment?: T;
+                    richText?: T;
+                    enableLink?: T;
+                    link?:
+                      | T
+                      | {
+                          type?: T;
+                          newTab?: T;
+                          reference?: T;
+                          url?: T;
+                          label?: T;
+                        };
+                    contentImage?: T;
+                    id?: T;
+                  };
+              backgroundImage?: T;
+              id?: T;
+              blockName?: T;
+            };
+        platformSection?:
+          | T
+          | {
+              intro?: T;
+              column?: T;
+              fixedBackground?: T;
+              platforms?:
+                | T
+                | {
+                    title?: T;
+                    richText?: T;
+                    enableLink?: T;
+                    link?:
+                      | T
+                      | {
+                          type?: T;
+                          newTab?: T;
+                          reference?: T;
+                          url?: T;
+                          label?: T;
+                        };
+                    contentImage?: T;
+                    id?: T;
+                  };
+              backgroundImage?: T;
+              id?: T;
+              blockName?: T;
+            };
+        mediaSection?:
+          | T
+          | {
+              background?: T;
+              position?: T;
+              backgroundAlign?: T;
+              richText?: T;
+              links?:
+                | T
+                | {
+                    link?:
+                      | T
+                      | {
+                          type?: T;
+                          newTab?: T;
+                          reference?: T;
+                          url?: T;
+                          label?: T;
+                          appearance?: T;
+                        };
+                    id?: T;
+                  };
+              media?: T;
+              bgColor?: T;
+              startColor?: T;
+              endColor?: T;
+              angle?: T;
+              id?: T;
+              blockName?: T;
+            };
+        featureSection?:
+          | T
+          | {
+              background?: T;
+              fixedBackground?: T;
+              alignment?: T;
+              richText?: T;
+              enableLink?: T;
+              link?:
+                | T
+                | {
+                    type?: T;
+                    newTab?: T;
+                    reference?: T;
+                    url?: T;
+                    label?: T;
+                  };
+              featureImage1?: T;
+              featureImage2?: T;
+              abstructImageTop?: T;
+              abstructImageBottom?: T;
+              id?: T;
+              blockName?: T;
+            };
+        mapEmbed?:
+          | T
+          | {
+              position?: T;
+              mapHeight?: T;
+              mapCode?: T;
+              richText?: T;
+              id?: T;
+              blockName?: T;
+            };
+        faq?:
+          | T
+          | {
+              theme?: T;
+              title?: T;
+              faqItems?:
+                | T
+                | {
+                    question?: T;
+                    answer?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        breadcrumb?:
+          | T
+          | {
+              theme?: T;
+              title?: T;
+              backgroundImage?: T;
+              id?: T;
+              blockName?: T;
+            };
+        pricing?:
+          | T
+          | {
+              theme?: T;
+              introContent?: T;
+              priceCards?:
+                | T
+                | {
+                    title?: T;
+                    description?: T;
+                    highlightText?: T;
+                    price?: T;
+                    priceType?: T;
+                    features?:
+                      | T
+                      | {
+                          feature?: T;
+                          id?: T;
+                        };
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        team?:
+          | T
+          | {
+              theme?: T;
+              introContent?: T;
+              teams?:
+                | T
+                | {
+                    name?: T;
+                    position?: T;
+                    image?: T;
+                    quote?: T;
+                    socialLinks?:
+                      | T
+                      | {
+                          logo?: T;
+                          link?: T;
+                          openNewTab?: T;
+                          id?: T;
+                        };
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        testimonial?:
+          | T
+          | {
+              theme?: T;
+              introContent?: T;
+              testimonials?:
+                | T
+                | {
+                    name?: T;
+                    position?: T;
+                    image?: T;
+                    quote?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        headingBlock?:
+          | T
+          | {
+              text?: T;
+              fontSize?: T;
+              textAlign?: T;
+              color?: T;
+              fontWeight?: T;
+              fontStyle?: T;
+              id?: T;
+              blockName?: T;
+            };
+        spacer?:
+          | T
+          | {
+              space?: T;
+              id?: T;
+              blockName?: T;
+            };
       };
   updatedAt?: T;
   createdAt?: T;

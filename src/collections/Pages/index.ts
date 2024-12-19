@@ -33,6 +33,8 @@ import { TeamBlock } from '@/blocks/TeamBlock/config'
 import { TestimonialBlock } from '@/blocks/TestimonialBlock/config'
 import { HeadingBlock } from '@/blocks/HeadingBlock/config'
 import { SpacerBlock } from '@/blocks/SpacerBlock/config'
+import { ReusableContent } from '@/blocks/ReusableContent/config'
+import { PlatformSection } from '@/blocks/PlatformSection/config'
 
 export const Pages: CollectionConfig = {
   slug: 'pages',
@@ -88,13 +90,15 @@ export const Pages: CollectionConfig = {
             {
               name: 'layout',
               type: 'blocks',
-              blocks: [CallToAction,
+              blocks: [
+                CallToAction,
                 Content,
                 MediaBlock,
                 Archive,
                 FormBlock,
                 MediaContentSection,
                 ServiceSection,
+                PlatformSection,
                 MediaSection,
                 FeatureSection,
                 MapEmbed,
@@ -104,7 +108,8 @@ export const Pages: CollectionConfig = {
                 TeamBlock,
                 TestimonialBlock,
                 HeadingBlock,
-                SpacerBlock
+                SpacerBlock,
+                ReusableContent,
               ],
               required: true,
             },
@@ -140,7 +145,7 @@ export const Pages: CollectionConfig = {
               // field paths to match the target field for data
               titlePath: 'meta.title',
               descriptionPath: 'meta.description',
-            })
+            }),
           ],
         },
       ],

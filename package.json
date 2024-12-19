@@ -18,6 +18,9 @@
     "start": "cross-env NODE_OPTIONS=--no-deprecation next start"
   },
   "dependencies": {
+    "@lexical/react": "^0.20.0",
+    "@lexical/selection": "^0.20.0",
+    "@lexical/utils": "^0.20.0",
     "@payloadcms/db-mongodb": "latest",
     "@payloadcms/live-preview-react": "latest",
     "@payloadcms/next": "latest",
@@ -38,9 +41,11 @@
     "clsx": "^2.1.1",
     "colord": "^2.9.3",
     "cross-env": "^7.0.3",
+    "framer-motion": "^11.12.0",
     "geist": "^1.3.0",
     "graphql": "^16.8.2",
     "jsonwebtoken": "9.0.2",
+    "lexical": "^0.20.0",
     "lucide-react": "^0.378.0",
     "next": "^15",
     "payload": "latest",

@@ -33,7 +33,6 @@ export const MediaContentSection: React.FC<Props> = (props) => {
                     <React.Fragment>
                       <Media
                         fill
-                        priority
                         resource={contentImage}
                         imgClassName="group-hover:scale-110 object-cover transition ease-in-out"
                       />
@@ -70,7 +69,6 @@ export const MediaContentSection: React.FC<Props> = (props) => {
                     <React.Fragment>
                       <Media
                         fill
-                        priority
                         resource={contentImage}
                         imgClassName="group-hover:scale-110 object-cover transition ease-in-out"
                       />
