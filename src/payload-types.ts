@@ -468,6 +468,24 @@ export interface FormBlock {
     };
     [k: string]: unknown;
   } | null;
+  position?: ('default' | 'fullscreen') | null;
+  size?: ('oneThird' | 'half' | 'twoThirds' | 'oneFourth' | 'threeFourths' | 'full') | null;
+  alignment?: ('contentForm' | 'formContent') | null;
+  content?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
   id?: string | null;
   blockName?: string | null;
   blockType: 'formBlock';
@@ -1451,6 +1469,10 @@ export interface PagesSelect<T extends boolean = true> {
               form?: T;
               enableIntro?: T;
               introContent?: T;
+              position?: T;
+              size?: T;
+              alignment?: T;
+              content?: T;
               id?: T;
               blockName?: T;
             };
@@ -1901,6 +1923,10 @@ export interface ReusableContentSelect<T extends boolean = true> {
               form?: T;
               enableIntro?: T;
               introContent?: T;
+              position?: T;
+              size?: T;
+              alignment?: T;
+              content?: T;
               id?: T;
               blockName?: T;
             };

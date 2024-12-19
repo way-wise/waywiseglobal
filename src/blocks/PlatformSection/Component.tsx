@@ -43,14 +43,15 @@ export const PlatformSection: React.FC<Props> = (props) => {
                   />
                 )}
                 <div className="absolute inset-0 w-full h-full rounded-3xl bg-black bg-opacity-0 transition duration-500 backdrop-filter group-hover:bg-opacity-20 group-hover:backdrop-blur"></div>
+                <div className="absolute inset-0 w-full h-full rounded-3xl bg-gradient-to-t from-gray-900/40 via-transparent to-transparent transition duration-500 block group-hover:hidden"></div>
                 <div className="absolute text-white flex flex-col justify-end items-start h-full px-5 py-8">
                   {platform?.title && (
-                    <h2 className="text-4xl font-semibold mb-2">{platform?.title}</h2>
+                    <h2 className="text-4xl font-semibold mb-2 drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)]">{platform?.title}</h2>
                   )}
                   {platform?.richText && (
                     <div className="hidden group-hover:block">
                       <RichText
-                        className="text-white"
+                        className="text-white drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)]"
                         content={platform?.richText}
                         enableGutter={false}
                       />
@@ -58,7 +59,7 @@ export const PlatformSection: React.FC<Props> = (props) => {
                   )}
                   {platform?.enableLink && platform?.link && (
                     <div className="w-full mt-4 md:mt-8 hidden transition duration-200 group-hover:block">
-                      <CMSLink className="rounded-lg bg-white py-3 px-5 w-full text-gray-600" {...platform?.link} />
+                      <CMSLink className="rounded-lg bg-white py-3 px-5 w-full text-gray-800" {...platform?.link} />
                     </div>
                   )}
                 </div>

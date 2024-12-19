@@ -7,9 +7,11 @@ import React, { useCallback, useState } from 'react'
 import { useForm, FormProvider } from 'react-hook-form'
 import RichText from '@/components/RichText'
 import { Button } from '@/components/ui/button'
+import { FormBlock as FormBlockprops } from '@/payload-types'
 
 import { buildInitialFormState } from './buildInitialFormState'
 import { fields } from './fields'
+import { cn } from '@/utilities/cn'
 
 export type Value = unknown
 
@@ -24,12 +26,13 @@ export interface Data {
 export type FormBlockType = {
   blockName?: string
   blockType?: 'formBlock'
+  className: string
   enableIntro: boolean
   form: FormType
   introContent?: {
     [k: string]: unknown
   }[]
-}
+} & FormBlockprops
 
 export const FormBlock: React.FC<
   {
@@ -41,7 +44,29 @@ export const FormBlock: React.FC<
     form: formFromProps,
     form: { id: formID, confirmationMessage, confirmationType, redirect, submitButtonLabel } = {},
     introContent,
+    content,
+    size = 'oneThird',
+    className,
+    alignment,
+    position = 'default',
   } = props
+
+  const colsSpanClasses = {
+    full: '12',
+    half: '6',
+    oneThird: '4',
+    twoThirds: '8',
+    oneFourth: '3',
+    threeFourths: '9',
+  }
+  const colsSpanReverseClasses = {
+    full: '12',
+    half: '6',
+    oneThird: '8',
+    twoThirds: '4',
+    oneFourth: '9',
+    threeFourths: '3',
+  }
 
   const formMethods = useForm({
     defaultValues: buildInitialFormState(formFromProps.fields),
@@ -126,46 +151,71 @@ export const FormBlock: React.FC<
   )
 
   return (
-    <div className="container lg:max-w-[48rem] pb-20">
-      <FormProvider {...formMethods}>
-        {enableIntro && introContent && !hasSubmitted && (
-          <RichText className="mb-8" content={introContent} enableGutter={false} />
-        )}
-        {!isLoading && hasSubmitted && confirmationType === 'message' && (
-          <RichText content={confirmationMessage} />
-        )}
-        {isLoading && !hasSubmitted && <p>Loading, please wait...</p>}
-        {error && <div>{`${error.status || '500'}: ${error.message || ''}`}</div>}
-        {!hasSubmitted && (
-          <form id={formID} onSubmit={handleSubmit(onSubmit)}>
-            <div className="flex flex-wrap justify-between space-y-4 mb-6 last:mb-0">
-              {formFromProps &&
-                formFromProps.fields &&
-                formFromProps.fields?.map((field, index) => {
-                  const Field: React.FC<any> = fields?.[field.blockType]
-                  if (Field) {
-                    return (
-                      <Field
-                        key={index}
-                        form={formFromProps}
-                        {...field}
-                        {...formMethods}
-                        control={control}
-                        errors={errors}
-                        register={register}
-                      />
-                    )
-                  }
-                  return null
-                })}
-            </div>
+    <div
+      className={cn(
+        '',
+        {
+          container: position === 'default',
+        },
+        className,
+      )}
+    >
+      <div className="grid grid-cols-4 lg:grid-cols-12 gap-y-8 gap-x-16">
+        <div
+          className={cn(`col-span-4 lg:col-span-${colsSpanClasses[size!]}`, {
+            'md:col-span-2': size !== 'full',
+            'order-first': alignment === 'formContent',
+            'order-last': alignment === 'contentForm',
+          })}
+        >
+          <FormProvider {...formMethods}>
+            {enableIntro && introContent && !hasSubmitted && (
+              <RichText className="mb-8" content={introContent} enableGutter={false} />
+            )}
+            {!isLoading && hasSubmitted && confirmationType === 'message' && (
+              <RichText content={confirmationMessage} />
+            )}
+            {isLoading && !hasSubmitted && <p>Loading, please wait...</p>}
+            {error && <div>{`${error.status || '500'}: ${error.message || ''}`}</div>}
+            {!hasSubmitted && (
+              <form id={formID} onSubmit={handleSubmit(onSubmit)}>
+                <div className="flex flex-wrap justify-between space-y-4 mb-6 last:mb-0">
+                  {formFromProps &&
+                    formFromProps.fields &&
+                    formFromProps.fields?.map((field, index) => {
+                      const Field: React.FC<any> = fields?.[field.blockType]
+                      if (Field) {
+                        return (
+                          <Field
+                            key={index}
+                            form={formFromProps}
+                            {...field}
+                            {...formMethods}
+                            control={control}
+                            errors={errors}
+                            register={register}
+                          />
+                        )
+                      }
+                      return null
+                    })}
+                </div>
 
-            <Button form={formID} type="submit" variant="default">
-              {submitButtonLabel}
-            </Button>
-          </form>
-        )}
-      </FormProvider>
+                <Button form={formID} type="submit" variant="default">
+                  {submitButtonLabel}
+                </Button>
+              </form>
+            )}
+          </FormProvider>
+        </div>
+        <div
+          className={cn(`col-span-4 lg:col-span-${colsSpanReverseClasses[size!]}`, {
+            'md:col-span-2': size !== 'full',
+          })}
+        >
+          {content && <RichText className="mb-8" content={content} enableGutter={false} />}
+        </div>
+      </div>
     </div>
   )
 }
