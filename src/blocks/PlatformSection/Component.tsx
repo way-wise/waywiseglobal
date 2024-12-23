@@ -29,12 +29,14 @@ export const PlatformSection: React.FC<Props> = (props) => {
       )}
       {platforms && platforms.length > 0 && (
         <div className="md:px-8 m-auto">
-          <div className={`grid grid-rows-6 grid-flow-col grid-cols-1 gap-x-6 gap-y-8 md:grid-cols-2 lg:${columnClass}`}>
+          <div className={`grid grid-rows-8 xl:grid-rows-6 grid-flow-col grid-cols-1 gap-x-6 gap-y-8 lg:grid-cols-2 xl:grid-cols-3`}>
             {platforms.map((platform, index) => (
               <div
                 key={index}
                 className={`relative w-full aspect-[4/3] group rounded-xl cursor-pointer bg-gray-200 overflow-hidden shadow-xl transition duration-200
-                  ${[2, 3, 4].includes(index) ? 'md:row-span-2 aspect-[4.16/2]' : 'md:row-span-3 aspect-[4/3]'}
+                  ${[2, 3, 4].includes(index) ?
+                  'row-span-1 lg:row-span-2 xl:row-span-2 aspect-[4/3] xl:aspect-[4.16/2]'
+                  : 'row-span-1 lg:row-span-2 xl:row-span-3 aspect-[4/3]'}
                   `}
               >
                 {platform?.contentImage && typeof platform?.contentImage === 'object' && (
