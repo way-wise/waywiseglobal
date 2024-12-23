@@ -29,27 +29,29 @@ export const PlatformSection: React.FC<Props> = (props) => {
       )}
       {platforms && platforms.length > 0 && (
         <div className="md:px-8 m-auto">
-          <div className={`grid grid-cols-1 gap-x-6 gap-y-8 md:grid-cols-2 lg:${columnClass}`}>
+          <div className={`grid grid-rows-6 grid-flow-col grid-cols-1 gap-x-6 gap-y-8 md:grid-cols-2 lg:${columnClass}`}>
             {platforms.map((platform, index) => (
               <div
                 key={index}
-                className={`relative w-full aspect-[4/3] group rounded-3xl cursor-pointer bg-gray-200 overflow-hidden shadow-xl transition duration-200`}
+                className={`relative w-full aspect-[4/3] group rounded-xl cursor-pointer bg-gray-200 overflow-hidden shadow-xl transition duration-200
+                  ${[2, 3, 4].includes(index) ? 'md:row-span-2 aspect-[4.16/2]' : 'md:row-span-3 aspect-[4/3]'}
+                  `}
               >
                 {platform?.contentImage && typeof platform?.contentImage === 'object' && (
                   <Media
                     fill
                     resource={platform?.contentImage}
-                    imgClassName="absolute w-full h-full inset-0 object-cover"
+                    imgClassName="absolute w-full h-full inset-0 object-cover group-hover:scale-105 transition duration-200"
                   />
                 )}
-                <div className="absolute inset-0 w-full h-full rounded-3xl bg-black bg-opacity-0 transition duration-500 backdrop-filter group-hover:bg-opacity-20 group-hover:backdrop-blur"></div>
-                <div className="absolute inset-0 w-full h-full rounded-3xl bg-gradient-to-t from-gray-900/40 via-transparent to-transparent transition duration-500 block group-hover:hidden"></div>
+                <div className="absolute inset-0 w-full h-full rounded-xl bg-black bg-opacity-0 transition duration-500 backdrop-filter group-hover:bg-opacity-20"></div>
+                <div className="absolute inset-0 w-full h-full rounded-xl bg-gradient-to-t from-gray-900/40 via-transparent to-transparent transition duration-500 block"></div>
                 <div className="absolute text-white flex flex-col justify-end items-start h-full px-5 py-8">
                   {platform?.title && (
-                    <h2 className="text-4xl font-semibold mb-2 drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)]">{platform?.title}</h2>
+                    <h2 className="group-hover:-translate-y-2 duration-200 text-4xl font-semibold mb-2 drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)]">{platform?.title}</h2>
                   )}
                   {platform?.richText && (
-                    <div className="hidden group-hover:block">
+                    <div className="group-hover:-translate-y-2 transition duration-200 delay-100">
                       <RichText
                         className="text-white drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)]"
                         content={platform?.richText}
@@ -58,7 +60,7 @@ export const PlatformSection: React.FC<Props> = (props) => {
                     </div>
                   )}
                   {platform?.enableLink && platform?.link && (
-                    <div className="w-full mt-4 md:mt-8 hidden transition duration-200 group-hover:block">
+                    <div className="w-full mt-4 md:mt-8 transition duration-200 delay-200 group-hover:-translate-y-2">
                       <CMSLink className="rounded-lg bg-white py-3 px-5 w-full text-gray-800" {...platform?.link} />
                     </div>
                   )}
