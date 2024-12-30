@@ -48,7 +48,7 @@ export const MultiImpactHero: React.FC<Page['hero']> = ({
                   href={imgItem.url || '/'}
                   key={imgItem.id}
                   target="_blank"
-                  className={`flex flex-col gap-2 justify-center items-center h-auto aspect-[4/3] w-full xl:h-52 xl:w-72 bg-slate-100/50 p-5 rounded-xl backdrop-blur group hover:bg-slate-50/60
+                  className={`flex flex-col gap-2 justify-center items-center h-52 w-full md:h-40 lg:h-40 xl:h-52 xl:w-72 bg-slate-100/50 p-5 rounded-xl backdrop-blur group hover:bg-slate-50/60
                     ${imagesTop.length === 3 && index === 1 ? 'translate-y-0 xl:-translate-y-8' : ''}
                     `}
                 >
@@ -74,7 +74,7 @@ export const MultiImpactHero: React.FC<Page['hero']> = ({
                   <Link
                     href={imagesMiddle[0].url || '/'}
                     target="_blank"
-                    className="flex flex-col gap-2 justify-center items-center h-auto aspect-[4/3] w-full xl:h-52 xl:w-72 bg-slate-100/50 p-5 rounded-xl backdrop-blur group hover:bg-slate-50/60"
+                    className="flex flex-col gap-2 justify-center items-center h-52 w-full md:h-40 lg:h-40 xl:h-52 xl:w-72 bg-slate-100/50 p-5 rounded-xl backdrop-blur group hover:bg-slate-50/60"
                   >
                     <Media
                       resource={imagesMiddle[0]?.image as MediaType}
@@ -112,7 +112,7 @@ export const MultiImpactHero: React.FC<Page['hero']> = ({
                     href={imagesMiddle[1].url || '/'}
                     key={imagesMiddle[1].id}
                     target="_blank"
-                    className="flex flex-col gap-4 justify-center items-center h-auto aspect-[4/3] w-full xl:h-52 xl:w-72 bg-slate-100/50 p-5 rounded-xl backdrop-blur group hover:bg-slate-50/60"
+                    className="flex flex-col gap-4 justify-center items-center h-52 w-full md:h-40 lg:h-40 xl:h-52 xl:w-72 bg-slate-100/50 p-5 rounded-xl backdrop-blur group hover:bg-slate-50/60"
                   >
                     <Media
                       resource={imagesMiddle[1]?.image as MediaType}
@@ -137,7 +137,7 @@ export const MultiImpactHero: React.FC<Page['hero']> = ({
                   href={imgItem.url || '/'}
                   key={imgItem.id}
                   target="_blank"
-                  className={`flex flex-col gap-2 justify-center items-center h-auto aspect-[4/3] w-full xl:h-52 xl:w-72 bg-slate-100/50 p-5 rounded-xl backdrop-blur group hover:bg-slate-50/60
+                  className={`flex flex-col gap-2 justify-center items-center h-52 w-full md:h-40 lg:h-40 xl:h-52 xl:w-72 bg-slate-100/50 p-5 rounded-xl backdrop-blur group hover:bg-slate-50/60
                     ${imagesBottom.length === 3 && index === 1 ? 'translate-y-0 xl:translate-y-8' : ''}
                     `}
                 >
