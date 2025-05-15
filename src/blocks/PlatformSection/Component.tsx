@@ -29,7 +29,7 @@ export const PlatformSection: React.FC<Props> = (props) => {
       )}
       {platforms && platforms.length > 0 && (
         <div className="md:px-8 m-auto">
-          <div className={`grid grid-rows-8 xl:grid-rows-6 grid-flow-col grid-cols-1 gap-x-6 gap-y-8 lg:grid-cols-2 xl:grid-cols-3`}>
+          <div className={`grid grid-rows-8 xl:grid-rows-6 grid-flow-col grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-2 xl:grid-cols-3`}>
             {platforms.map((platform, index) => (
               <div
                 key={index}
