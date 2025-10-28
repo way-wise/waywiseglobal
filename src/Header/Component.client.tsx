@@ -235,7 +235,7 @@ const HeaderClient: React.FC<HeaderClientProps> = ({ header }) => {
                 </ul>
               </nav>
 
-              <div className="flex items-center justify-end">
+              {/* <div className="flex items-center justify-end">
                 {user && user?.id ? (
                   <div className="relative group" ref={userMenuRef}>
                     <div
@@ -330,7 +330,7 @@ const HeaderClient: React.FC<HeaderClientProps> = ({ header }) => {
                     </svg>
                   </Link>
                 )}
-              </div>
+              </div> */}
               {header?.callback && (
                 <div className="bg-primary py-2 pl-3 pr-4 hidden xl:flex items-center justify-center gap-3 rounded-xl">
                   <div>
