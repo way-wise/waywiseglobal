@@ -6,10 +6,66 @@
  * and re-run `payload generate:types` to regenerate this file.
  */
 
+/**
+ * Supported timezones in IANA format.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "supportedTimezones".
+ */
+export type SupportedTimezones =
+  | 'Pacific/Midway'
+  | 'Pacific/Niue'
+  | 'Pacific/Honolulu'
+  | 'Pacific/Rarotonga'
+  | 'America/Anchorage'
+  | 'Pacific/Gambier'
+  | 'America/Los_Angeles'
+  | 'America/Tijuana'
+  | 'America/Denver'
+  | 'America/Phoenix'
+  | 'America/Chicago'
+  | 'America/Guatemala'
+  | 'America/New_York'
+  | 'America/Bogota'
+  | 'America/Caracas'
+  | 'America/Santiago'
+  | 'America/Buenos_Aires'
+  | 'America/Sao_Paulo'
+  | 'Atlantic/South_Georgia'
+  | 'Atlantic/Azores'
+  | 'Atlantic/Cape_Verde'
+  | 'Europe/London'
+  | 'Europe/Berlin'
+  | 'Africa/Lagos'
+  | 'Europe/Athens'
+  | 'Africa/Cairo'
+  | 'Europe/Moscow'
+  | 'Asia/Riyadh'
+  | 'Asia/Dubai'
+  | 'Asia/Baku'
+  | 'Asia/Karachi'
+  | 'Asia/Tashkent'
+  | 'Asia/Calcutta'
+  | 'Asia/Dhaka'
+  | 'Asia/Almaty'
+  | 'Asia/Jakarta'
+  | 'Asia/Bangkok'
+  | 'Asia/Shanghai'
+  | 'Asia/Singapore'
+  | 'Asia/Tokyo'
+  | 'Asia/Seoul'
+  | 'Australia/Brisbane'
+  | 'Australia/Sydney'
+  | 'Pacific/Guam'
+  | 'Pacific/Noumea'
+  | 'Pacific/Auckland'
+  | 'Pacific/Fiji';
+
 export interface Config {
   auth: {
     users: UserAuthOperations;
   };
+  blocks: {};
   collections: {
     pages: Page;
     posts: Post;
@@ -92,7 +148,7 @@ export interface Page {
       root: {
         type: string;
         children: {
-          type: string;
+          type: any;
           version: number;
           [k: string]: unknown;
         }[];
@@ -114,6 +170,9 @@ export interface Page {
             } | null;
             url?: string | null;
             label: string;
+            /**
+             * Choose how the link should be rendered.
+             */
             appearance?: ('default' | 'outline') | null;
           };
           id?: string | null;
@@ -164,6 +223,9 @@ export interface Page {
     | {
         reusableContentBlockFields: {
           settings?: {
+            /**
+             * Leave blank for system default
+             */
             theme?: ('light' | 'dark') | null;
           };
           reusableContent: string | ReusableContent;
@@ -176,6 +238,9 @@ export interface Page {
   )[];
   meta?: {
     title?: string | null;
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
     image?: (string | null) | Media;
     description?: string | null;
     keywords?: string | null;
@@ -198,7 +263,7 @@ export interface Media {
     root: {
       type: string;
       children: {
-        type: string;
+        type: any;
         version: number;
         [k: string]: unknown;
       }[];
@@ -241,7 +306,7 @@ export interface CallToActionBlock {
     root: {
       type: string;
       children: {
-        type: string;
+        type: any;
         version: number;
         [k: string]: unknown;
       }[];
@@ -263,6 +328,9 @@ export interface CallToActionBlock {
           } | null;
           url?: string | null;
           label: string;
+          /**
+           * Choose how the link should be rendered.
+           */
           appearance?: ('default' | 'outline') | null;
         };
         id?: string | null;
@@ -286,7 +354,7 @@ export interface ContentBlock {
           root: {
             type: string;
             children: {
-              type: string;
+              type: any;
               version: number;
               [k: string]: unknown;
             }[];
@@ -307,6 +375,9 @@ export interface ContentBlock {
           } | null;
           url?: string | null;
           label: string;
+          /**
+           * Choose how the link should be rendered.
+           */
           appearance?: ('default' | 'outline') | null;
         };
         id?: string | null;
@@ -339,7 +410,7 @@ export interface ArchiveBlock {
     root: {
       type: string;
       children: {
-        type: string;
+        type: any;
         version: number;
         [k: string]: unknown;
       }[];
@@ -394,7 +465,7 @@ export interface Post {
     root: {
       type: string;
       children: {
-        type: string;
+        type: any;
         version: number;
         [k: string]: unknown;
       }[];
@@ -409,6 +480,9 @@ export interface Post {
   categories?: (string | Category)[] | null;
   meta?: {
     title?: string | null;
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
     image?: (string | null) | Media;
     description?: string | null;
     keywords?: string | null;
@@ -444,6 +518,13 @@ export interface User {
   hash?: string | null;
   loginAttempts?: number | null;
   lockUntil?: string | null;
+  sessions?:
+    | {
+        id: string;
+        createdAt?: string | null;
+        expiresAt: string;
+      }[]
+    | null;
   password?: string | null;
 }
 /**
@@ -457,7 +538,7 @@ export interface FormBlock {
     root: {
       type: string;
       children: {
-        type: string;
+        type: any;
         version: number;
         [k: string]: unknown;
       }[];
@@ -470,12 +551,15 @@ export interface FormBlock {
   } | null;
   position?: ('default' | 'fullscreen') | null;
   size?: ('oneThird' | 'half' | 'twoThirds' | 'oneFourth' | 'threeFourths' | 'full') | null;
+  /**
+   * Choose how to align the content for this block.
+   */
   alignment?: ('contentForm' | 'formContent') | null;
   content?: {
     root: {
       type: string;
       children: {
-        type: string;
+        type: any;
         version: number;
         [k: string]: unknown;
       }[];
@@ -532,7 +616,7 @@ export interface Form {
               root: {
                 type: string;
                 children: {
-                  type: string;
+                  type: any;
                   version: number;
                   [k: string]: unknown;
                 }[];
@@ -562,6 +646,7 @@ export interface Form {
             label?: string | null;
             width?: number | null;
             defaultValue?: string | null;
+            placeholder?: string | null;
             options?:
               | {
                   label: string;
@@ -606,12 +691,15 @@ export interface Form {
       )[]
     | null;
   submitButtonLabel?: string | null;
+  /**
+   * Choose whether to display an on-page message or redirect to a different page after they submit the form.
+   */
   confirmationType?: ('message' | 'redirect') | null;
   confirmationMessage?: {
     root: {
       type: string;
       children: {
-        type: string;
+        type: any;
         version: number;
         [k: string]: unknown;
       }[];
@@ -625,6 +713,9 @@ export interface Form {
   redirect?: {
     url: string;
   };
+  /**
+   * Send custom emails when the form submits. Use comma separated lists to send the same email to multiple recipients. To reference a value from this form, wrap that field's name with double curly brackets, i.e. {{firstName}}. You can use a wildcard {{*}} to output all data and {{*:table}} to format it as an HTML table in the email.
+   */
   emails?:
     | {
         emailTo?: string | null;
@@ -633,11 +724,14 @@ export interface Form {
         replyTo?: string | null;
         emailFrom?: string | null;
         subject: string;
+        /**
+         * Enter the message that should be sent in this email.
+         */
         message?: {
           root: {
             type: string;
             children: {
-              type: string;
+              type: any;
               version: number;
               [k: string]: unknown;
             }[];
@@ -659,13 +753,16 @@ export interface Form {
  * via the `definition` "MediaContentSection".
  */
 export interface MediaContentSection {
+  /**
+   * Choose how to align the content for this block.
+   */
   alignment?: ('contentMedia' | 'mediaContent') | null;
   mediaHeight: number;
   richText?: {
     root: {
       type: string;
       children: {
-        type: string;
+        type: any;
         version: number;
         [k: string]: unknown;
       }[];
@@ -702,7 +799,7 @@ export interface ServiceSection {
     root: {
       type: string;
       children: {
-        type: string;
+        type: any;
         version: number;
         [k: string]: unknown;
       }[];
@@ -722,7 +819,7 @@ export interface ServiceSection {
           root: {
             type: string;
             children: {
-              type: string;
+              type: any;
               version: number;
               [k: string]: unknown;
             }[];
@@ -762,7 +859,7 @@ export interface PlatformSection {
     root: {
       type: string;
       children: {
-        type: string;
+        type: any;
         version: number;
         [k: string]: unknown;
       }[];
@@ -782,7 +879,7 @@ export interface PlatformSection {
           root: {
             type: string;
             children: {
-              type: string;
+              type: any;
               version: number;
               [k: string]: unknown;
             }[];
@@ -825,7 +922,7 @@ export interface MediaSection {
     root: {
       type: string;
       children: {
-        type: string;
+        type: any;
         version: number;
         [k: string]: unknown;
       }[];
@@ -847,6 +944,9 @@ export interface MediaSection {
           } | null;
           url?: string | null;
           label: string;
+          /**
+           * Choose how the link should be rendered.
+           */
           appearance?: ('default' | 'outline') | null;
         };
         id?: string | null;
@@ -873,7 +973,7 @@ export interface FeatureSection {
     root: {
       type: string;
       children: {
-        type: string;
+        type: any;
         version: number;
         [k: string]: unknown;
       }[];
@@ -915,7 +1015,7 @@ export interface MapEmbed {
     root: {
       type: string;
       children: {
-        type: string;
+        type: any;
         version: number;
         [k: string]: unknown;
       }[];
@@ -944,7 +1044,7 @@ export interface FaqBlock {
           root: {
             type: string;
             children: {
-              type: string;
+              type: any;
               version: number;
               [k: string]: unknown;
             }[];
@@ -984,7 +1084,7 @@ export interface PricingBlock {
     root: {
       type: string;
       children: {
-        type: string;
+        type: any;
         version: number;
         [k: string]: unknown;
       }[];
@@ -1025,7 +1125,7 @@ export interface TeamBlock {
     root: {
       type: string;
       children: {
-        type: string;
+        type: any;
         version: number;
         [k: string]: unknown;
       }[];
@@ -1067,7 +1167,7 @@ export interface TestimonialBlock {
     root: {
       type: string;
       children: {
-        type: string;
+        type: any;
         version: number;
         [k: string]: unknown;
       }[];
@@ -1152,6 +1252,9 @@ export interface ReusableContent {
  */
 export interface Redirect {
   id: string;
+  /**
+   * You will need to rebuild the website when changing this field.
+   */
   from: string;
   to?: {
     type?: ('reference' | 'custom') | null;
@@ -1187,6 +1290,8 @@ export interface FormSubmission {
   createdAt: string;
 }
 /**
+ * This is a collection of automatically created search results. These results are used by the global site search and will be updated automatically as documents in the CMS are created or updated.
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "search".
  */
@@ -1355,341 +1460,24 @@ export interface PagesSelect<T extends boolean = true> {
   layout?:
     | T
     | {
-        cta?:
-          | T
-          | {
-              theme?: T;
-              richText?: T;
-              links?:
-                | T
-                | {
-                    link?:
-                      | T
-                      | {
-                          type?: T;
-                          newTab?: T;
-                          reference?: T;
-                          url?: T;
-                          label?: T;
-                          appearance?: T;
-                        };
-                    id?: T;
-                  };
-              backgroundImage?: T;
-              backgroundColor?: T;
-              id?: T;
-              blockName?: T;
-            };
-        content?:
-          | T
-          | {
-              columns?:
-                | T
-                | {
-                    size?: T;
-                    richText?: T;
-                    enableLink?: T;
-                    link?:
-                      | T
-                      | {
-                          type?: T;
-                          newTab?: T;
-                          reference?: T;
-                          url?: T;
-                          label?: T;
-                          appearance?: T;
-                        };
-                    id?: T;
-                  };
-              id?: T;
-              blockName?: T;
-            };
-        mediaBlock?:
-          | T
-          | {
-              position?: T;
-              media?: T;
-              id?: T;
-              blockName?: T;
-            };
-        archive?:
-          | T
-          | {
-              theme?: T;
-              background?: T;
-              fixedBackground?: T;
-              introContent?: T;
-              populateBy?: T;
-              relationTo?: T;
-              categories?: T;
-              limit?: T;
-              selectedDocs?: T;
-              id?: T;
-              blockName?: T;
-            };
-        formBlock?:
-          | T
-          | {
-              form?: T;
-              enableIntro?: T;
-              introContent?: T;
-              position?: T;
-              size?: T;
-              alignment?: T;
-              content?: T;
-              id?: T;
-              blockName?: T;
-            };
-        mediaContentSection?:
-          | T
-          | {
-              alignment?: T;
-              mediaHeight?: T;
-              richText?: T;
-              enableLink?: T;
-              link?:
-                | T
-                | {
-                    type?: T;
-                    newTab?: T;
-                    reference?: T;
-                    url?: T;
-                    label?: T;
-                  };
-              contentImage?: T;
-              backgroundImage?: T;
-              id?: T;
-              blockName?: T;
-            };
-        serviceSection?:
-          | T
-          | {
-              intro?: T;
-              column?: T;
-              fixedBackground?: T;
-              services?:
-                | T
-                | {
-                    alignment?: T;
-                    richText?: T;
-                    enableLink?: T;
-                    link?:
-                      | T
-                      | {
-                          type?: T;
-                          newTab?: T;
-                          reference?: T;
-                          url?: T;
-                          label?: T;
-                        };
-                    contentImage?: T;
-                    id?: T;
-                  };
-              backgroundImage?: T;
-              id?: T;
-              blockName?: T;
-            };
-        platformSection?:
-          | T
-          | {
-              intro?: T;
-              column?: T;
-              fixedBackground?: T;
-              platforms?:
-                | T
-                | {
-                    title?: T;
-                    richText?: T;
-                    enableLink?: T;
-                    link?:
-                      | T
-                      | {
-                          type?: T;
-                          newTab?: T;
-                          reference?: T;
-                          url?: T;
-                          label?: T;
-                        };
-                    contentImage?: T;
-                    id?: T;
-                  };
-              backgroundImage?: T;
-              id?: T;
-              blockName?: T;
-            };
-        mediaSection?:
-          | T
-          | {
-              background?: T;
-              position?: T;
-              backgroundAlign?: T;
-              richText?: T;
-              links?:
-                | T
-                | {
-                    link?:
-                      | T
-                      | {
-                          type?: T;
-                          newTab?: T;
-                          reference?: T;
-                          url?: T;
-                          label?: T;
-                          appearance?: T;
-                        };
-                    id?: T;
-                  };
-              media?: T;
-              bgColor?: T;
-              startColor?: T;
-              endColor?: T;
-              angle?: T;
-              id?: T;
-              blockName?: T;
-            };
-        featureSection?:
-          | T
-          | {
-              background?: T;
-              fixedBackground?: T;
-              alignment?: T;
-              richText?: T;
-              enableLink?: T;
-              link?:
-                | T
-                | {
-                    type?: T;
-                    newTab?: T;
-                    reference?: T;
-                    url?: T;
-                    label?: T;
-                  };
-              featureImage1?: T;
-              featureImage2?: T;
-              abstructImageTop?: T;
-              abstructImageBottom?: T;
-              id?: T;
-              blockName?: T;
-            };
-        mapEmbed?:
-          | T
-          | {
-              position?: T;
-              mapHeight?: T;
-              mapCode?: T;
-              richText?: T;
-              id?: T;
-              blockName?: T;
-            };
-        faq?:
-          | T
-          | {
-              theme?: T;
-              title?: T;
-              faqItems?:
-                | T
-                | {
-                    question?: T;
-                    answer?: T;
-                    id?: T;
-                  };
-              id?: T;
-              blockName?: T;
-            };
-        breadcrumb?:
-          | T
-          | {
-              theme?: T;
-              title?: T;
-              backgroundImage?: T;
-              id?: T;
-              blockName?: T;
-            };
-        pricing?:
-          | T
-          | {
-              theme?: T;
-              introContent?: T;
-              priceCards?:
-                | T
-                | {
-                    title?: T;
-                    description?: T;
-                    highlightText?: T;
-                    price?: T;
-                    priceType?: T;
-                    features?:
-                      | T
-                      | {
-                          feature?: T;
-                          id?: T;
-                        };
-                    id?: T;
-                  };
-              id?: T;
-              blockName?: T;
-            };
-        team?:
-          | T
-          | {
-              theme?: T;
-              introContent?: T;
-              teams?:
-                | T
-                | {
-                    name?: T;
-                    position?: T;
-                    image?: T;
-                    quote?: T;
-                    socialLinks?:
-                      | T
-                      | {
-                          logo?: T;
-                          link?: T;
-                          openNewTab?: T;
-                          id?: T;
-                        };
-                    id?: T;
-                  };
-              id?: T;
-              blockName?: T;
-            };
-        testimonial?:
-          | T
-          | {
-              theme?: T;
-              introContent?: T;
-              testimonials?:
-                | T
-                | {
-                    name?: T;
-                    position?: T;
-                    image?: T;
-                    quote?: T;
-                    id?: T;
-                  };
-              id?: T;
-              blockName?: T;
-            };
-        headingBlock?:
-          | T
-          | {
-              text?: T;
-              fontSize?: T;
-              textAlign?: T;
-              color?: T;
-              fontWeight?: T;
-              fontStyle?: T;
-              id?: T;
-              blockName?: T;
-            };
-        spacer?:
-          | T
-          | {
-              space?: T;
-              id?: T;
-              blockName?: T;
-            };
+        cta?: T | CallToActionBlockSelect<T>;
+        content?: T | ContentBlockSelect<T>;
+        mediaBlock?: T | MediaBlockSelect<T>;
+        archive?: T | ArchiveBlockSelect<T>;
+        formBlock?: T | FormBlockSelect<T>;
+        mediaContentSection?: T | MediaContentSectionSelect<T>;
+        serviceSection?: T | ServiceSectionSelect<T>;
+        platformSection?: T | PlatformSectionSelect<T>;
+        mediaSection?: T | MediaSectionSelect<T>;
+        featureSection?: T | FeatureSectionSelect<T>;
+        mapEmbed?: T | MapEmbedSelect<T>;
+        faq?: T | FaqBlockSelect<T>;
+        breadcrumb?: T | BreadcrumbBlockSelect<T>;
+        pricing?: T | PricingBlockSelect<T>;
+        team?: T | TeamBlockSelect<T>;
+        testimonial?: T | TestimonialBlockSelect<T>;
+        headingBlock?: T | HeadingBlockSelect<T>;
+        spacer?: T | SpacerBlockSelect<T>;
         reusableContentBlock?:
           | T
           | {
@@ -1711,12 +1499,10 @@ export interface PagesSelect<T extends boolean = true> {
   meta?:
     | T
     | {
-        overview?: T;
         title?: T;
         image?: T;
         description?: T;
         keywords?: T;
-        preview?: T;
       };
   publishedAt?: T;
   slug?: T;
@@ -1724,6 +1510,377 @@ export interface PagesSelect<T extends boolean = true> {
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "CallToActionBlock_select".
+ */
+export interface CallToActionBlockSelect<T extends boolean = true> {
+  theme?: T;
+  richText?: T;
+  links?:
+    | T
+    | {
+        link?:
+          | T
+          | {
+              type?: T;
+              newTab?: T;
+              reference?: T;
+              url?: T;
+              label?: T;
+              appearance?: T;
+            };
+        id?: T;
+      };
+  backgroundImage?: T;
+  backgroundColor?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ContentBlock_select".
+ */
+export interface ContentBlockSelect<T extends boolean = true> {
+  columns?:
+    | T
+    | {
+        size?: T;
+        richText?: T;
+        enableLink?: T;
+        link?:
+          | T
+          | {
+              type?: T;
+              newTab?: T;
+              reference?: T;
+              url?: T;
+              label?: T;
+              appearance?: T;
+            };
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "MediaBlock_select".
+ */
+export interface MediaBlockSelect<T extends boolean = true> {
+  position?: T;
+  media?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ArchiveBlock_select".
+ */
+export interface ArchiveBlockSelect<T extends boolean = true> {
+  theme?: T;
+  background?: T;
+  fixedBackground?: T;
+  introContent?: T;
+  populateBy?: T;
+  relationTo?: T;
+  categories?: T;
+  limit?: T;
+  selectedDocs?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "FormBlock_select".
+ */
+export interface FormBlockSelect<T extends boolean = true> {
+  form?: T;
+  enableIntro?: T;
+  introContent?: T;
+  position?: T;
+  size?: T;
+  alignment?: T;
+  content?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "MediaContentSection_select".
+ */
+export interface MediaContentSectionSelect<T extends boolean = true> {
+  alignment?: T;
+  mediaHeight?: T;
+  richText?: T;
+  enableLink?: T;
+  link?:
+    | T
+    | {
+        type?: T;
+        newTab?: T;
+        reference?: T;
+        url?: T;
+        label?: T;
+      };
+  contentImage?: T;
+  backgroundImage?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ServiceSection_select".
+ */
+export interface ServiceSectionSelect<T extends boolean = true> {
+  intro?: T;
+  column?: T;
+  fixedBackground?: T;
+  services?:
+    | T
+    | {
+        alignment?: T;
+        richText?: T;
+        enableLink?: T;
+        link?:
+          | T
+          | {
+              type?: T;
+              newTab?: T;
+              reference?: T;
+              url?: T;
+              label?: T;
+            };
+        contentImage?: T;
+        id?: T;
+      };
+  backgroundImage?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "PlatformSection_select".
+ */
+export interface PlatformSectionSelect<T extends boolean = true> {
+  intro?: T;
+  column?: T;
+  fixedBackground?: T;
+  platforms?:
+    | T
+    | {
+        title?: T;
+        richText?: T;
+        enableLink?: T;
+        link?:
+          | T
+          | {
+              type?: T;
+              newTab?: T;
+              reference?: T;
+              url?: T;
+              label?: T;
+            };
+        contentImage?: T;
+        id?: T;
+      };
+  backgroundImage?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "MediaSection_select".
+ */
+export interface MediaSectionSelect<T extends boolean = true> {
+  background?: T;
+  position?: T;
+  backgroundAlign?: T;
+  richText?: T;
+  links?:
+    | T
+    | {
+        link?:
+          | T
+          | {
+              type?: T;
+              newTab?: T;
+              reference?: T;
+              url?: T;
+              label?: T;
+              appearance?: T;
+            };
+        id?: T;
+      };
+  media?: T;
+  bgColor?: T;
+  startColor?: T;
+  endColor?: T;
+  angle?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "FeatureSection_select".
+ */
+export interface FeatureSectionSelect<T extends boolean = true> {
+  background?: T;
+  fixedBackground?: T;
+  alignment?: T;
+  richText?: T;
+  enableLink?: T;
+  link?:
+    | T
+    | {
+        type?: T;
+        newTab?: T;
+        reference?: T;
+        url?: T;
+        label?: T;
+      };
+  featureImage1?: T;
+  featureImage2?: T;
+  abstructImageTop?: T;
+  abstructImageBottom?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "MapEmbed_select".
+ */
+export interface MapEmbedSelect<T extends boolean = true> {
+  position?: T;
+  mapHeight?: T;
+  mapCode?: T;
+  richText?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "FaqBlock_select".
+ */
+export interface FaqBlockSelect<T extends boolean = true> {
+  theme?: T;
+  title?: T;
+  faqItems?:
+    | T
+    | {
+        question?: T;
+        answer?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "BreadcrumbBlock_select".
+ */
+export interface BreadcrumbBlockSelect<T extends boolean = true> {
+  theme?: T;
+  title?: T;
+  backgroundImage?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "PricingBlock_select".
+ */
+export interface PricingBlockSelect<T extends boolean = true> {
+  theme?: T;
+  introContent?: T;
+  priceCards?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        highlightText?: T;
+        price?: T;
+        priceType?: T;
+        features?:
+          | T
+          | {
+              feature?: T;
+              id?: T;
+            };
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "TeamBlock_select".
+ */
+export interface TeamBlockSelect<T extends boolean = true> {
+  theme?: T;
+  introContent?: T;
+  teams?:
+    | T
+    | {
+        name?: T;
+        position?: T;
+        image?: T;
+        quote?: T;
+        socialLinks?:
+          | T
+          | {
+              logo?: T;
+              link?: T;
+              openNewTab?: T;
+              id?: T;
+            };
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "TestimonialBlock_select".
+ */
+export interface TestimonialBlockSelect<T extends boolean = true> {
+  theme?: T;
+  introContent?: T;
+  testimonials?:
+    | T
+    | {
+        name?: T;
+        position?: T;
+        image?: T;
+        quote?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "HeadingBlock_select".
+ */
+export interface HeadingBlockSelect<T extends boolean = true> {
+  text?: T;
+  fontSize?: T;
+  textAlign?: T;
+  color?: T;
+  fontWeight?: T;
+  fontStyle?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "SpacerBlock_select".
+ */
+export interface SpacerBlockSelect<T extends boolean = true> {
+  space?: T;
+  id?: T;
+  blockName?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1737,12 +1894,10 @@ export interface PostsSelect<T extends boolean = true> {
   meta?:
     | T
     | {
-        overview?: T;
         title?: T;
         image?: T;
         description?: T;
         keywords?: T;
-        preview?: T;
       };
   publishedAt?: T;
   authors?: T;
@@ -1818,341 +1973,24 @@ export interface ReusableContentSelect<T extends boolean = true> {
   layout?:
     | T
     | {
-        cta?:
-          | T
-          | {
-              theme?: T;
-              richText?: T;
-              links?:
-                | T
-                | {
-                    link?:
-                      | T
-                      | {
-                          type?: T;
-                          newTab?: T;
-                          reference?: T;
-                          url?: T;
-                          label?: T;
-                          appearance?: T;
-                        };
-                    id?: T;
-                  };
-              backgroundImage?: T;
-              backgroundColor?: T;
-              id?: T;
-              blockName?: T;
-            };
-        content?:
-          | T
-          | {
-              columns?:
-                | T
-                | {
-                    size?: T;
-                    richText?: T;
-                    enableLink?: T;
-                    link?:
-                      | T
-                      | {
-                          type?: T;
-                          newTab?: T;
-                          reference?: T;
-                          url?: T;
-                          label?: T;
-                          appearance?: T;
-                        };
-                    id?: T;
-                  };
-              id?: T;
-              blockName?: T;
-            };
-        mediaBlock?:
-          | T
-          | {
-              position?: T;
-              media?: T;
-              id?: T;
-              blockName?: T;
-            };
-        archive?:
-          | T
-          | {
-              theme?: T;
-              background?: T;
-              fixedBackground?: T;
-              introContent?: T;
-              populateBy?: T;
-              relationTo?: T;
-              categories?: T;
-              limit?: T;
-              selectedDocs?: T;
-              id?: T;
-              blockName?: T;
-            };
-        formBlock?:
-          | T
-          | {
-              form?: T;
-              enableIntro?: T;
-              introContent?: T;
-              position?: T;
-              size?: T;
-              alignment?: T;
-              content?: T;
-              id?: T;
-              blockName?: T;
-            };
-        mediaContentSection?:
-          | T
-          | {
-              alignment?: T;
-              mediaHeight?: T;
-              richText?: T;
-              enableLink?: T;
-              link?:
-                | T
-                | {
-                    type?: T;
-                    newTab?: T;
-                    reference?: T;
-                    url?: T;
-                    label?: T;
-                  };
-              contentImage?: T;
-              backgroundImage?: T;
-              id?: T;
-              blockName?: T;
-            };
-        serviceSection?:
-          | T
-          | {
-              intro?: T;
-              column?: T;
-              fixedBackground?: T;
-              services?:
-                | T
-                | {
-                    alignment?: T;
-                    richText?: T;
-                    enableLink?: T;
-                    link?:
-                      | T
-                      | {
-                          type?: T;
-                          newTab?: T;
-                          reference?: T;
-                          url?: T;
-                          label?: T;
-                        };
-                    contentImage?: T;
-                    id?: T;
-                  };
-              backgroundImage?: T;
-              id?: T;
-              blockName?: T;
-            };
-        platformSection?:
-          | T
-          | {
-              intro?: T;
-              column?: T;
-              fixedBackground?: T;
-              platforms?:
-                | T
-                | {
-                    title?: T;
-                    richText?: T;
-                    enableLink?: T;
-                    link?:
-                      | T
-                      | {
-                          type?: T;
-                          newTab?: T;
-                          reference?: T;
-                          url?: T;
-                          label?: T;
-                        };
-                    contentImage?: T;
-                    id?: T;
-                  };
-              backgroundImage?: T;
-              id?: T;
-              blockName?: T;
-            };
-        mediaSection?:
-          | T
-          | {
-              background?: T;
-              position?: T;
-              backgroundAlign?: T;
-              richText?: T;
-              links?:
-                | T
-                | {
-                    link?:
-                      | T
-                      | {
-                          type?: T;
-                          newTab?: T;
-                          reference?: T;
-                          url?: T;
-                          label?: T;
-                          appearance?: T;
-                        };
-                    id?: T;
-                  };
-              media?: T;
-              bgColor?: T;
-              startColor?: T;
-              endColor?: T;
-              angle?: T;
-              id?: T;
-              blockName?: T;
-            };
-        featureSection?:
-          | T
-          | {
-              background?: T;
-              fixedBackground?: T;
-              alignment?: T;
-              richText?: T;
-              enableLink?: T;
-              link?:
-                | T
-                | {
-                    type?: T;
-                    newTab?: T;
-                    reference?: T;
-                    url?: T;
-                    label?: T;
-                  };
-              featureImage1?: T;
-              featureImage2?: T;
-              abstructImageTop?: T;
-              abstructImageBottom?: T;
-              id?: T;
-              blockName?: T;
-            };
-        mapEmbed?:
-          | T
-          | {
-              position?: T;
-              mapHeight?: T;
-              mapCode?: T;
-              richText?: T;
-              id?: T;
-              blockName?: T;
-            };
-        faq?:
-          | T
-          | {
-              theme?: T;
-              title?: T;
-              faqItems?:
-                | T
-                | {
-                    question?: T;
-                    answer?: T;
-                    id?: T;
-                  };
-              id?: T;
-              blockName?: T;
-            };
-        breadcrumb?:
-          | T
-          | {
-              theme?: T;
-              title?: T;
-              backgroundImage?: T;
-              id?: T;
-              blockName?: T;
-            };
-        pricing?:
-          | T
-          | {
-              theme?: T;
-              introContent?: T;
-              priceCards?:
-                | T
-                | {
-                    title?: T;
-                    description?: T;
-                    highlightText?: T;
-                    price?: T;
-                    priceType?: T;
-                    features?:
-                      | T
-                      | {
-                          feature?: T;
-                          id?: T;
-                        };
-                    id?: T;
-                  };
-              id?: T;
-              blockName?: T;
-            };
-        team?:
-          | T
-          | {
-              theme?: T;
-              introContent?: T;
-              teams?:
-                | T
-                | {
-                    name?: T;
-                    position?: T;
-                    image?: T;
-                    quote?: T;
-                    socialLinks?:
-                      | T
-                      | {
-                          logo?: T;
-                          link?: T;
-                          openNewTab?: T;
-                          id?: T;
-                        };
-                    id?: T;
-                  };
-              id?: T;
-              blockName?: T;
-            };
-        testimonial?:
-          | T
-          | {
-              theme?: T;
-              introContent?: T;
-              testimonials?:
-                | T
-                | {
-                    name?: T;
-                    position?: T;
-                    image?: T;
-                    quote?: T;
-                    id?: T;
-                  };
-              id?: T;
-              blockName?: T;
-            };
-        headingBlock?:
-          | T
-          | {
-              text?: T;
-              fontSize?: T;
-              textAlign?: T;
-              color?: T;
-              fontWeight?: T;
-              fontStyle?: T;
-              id?: T;
-              blockName?: T;
-            };
-        spacer?:
-          | T
-          | {
-              space?: T;
-              id?: T;
-              blockName?: T;
-            };
+        cta?: T | CallToActionBlockSelect<T>;
+        content?: T | ContentBlockSelect<T>;
+        mediaBlock?: T | MediaBlockSelect<T>;
+        archive?: T | ArchiveBlockSelect<T>;
+        formBlock?: T | FormBlockSelect<T>;
+        mediaContentSection?: T | MediaContentSectionSelect<T>;
+        serviceSection?: T | ServiceSectionSelect<T>;
+        platformSection?: T | PlatformSectionSelect<T>;
+        mediaSection?: T | MediaSectionSelect<T>;
+        featureSection?: T | FeatureSectionSelect<T>;
+        mapEmbed?: T | MapEmbedSelect<T>;
+        faq?: T | FaqBlockSelect<T>;
+        breadcrumb?: T | BreadcrumbBlockSelect<T>;
+        pricing?: T | PricingBlockSelect<T>;
+        team?: T | TeamBlockSelect<T>;
+        testimonial?: T | TestimonialBlockSelect<T>;
+        headingBlock?: T | HeadingBlockSelect<T>;
+        spacer?: T | SpacerBlockSelect<T>;
       };
   updatedAt?: T;
   createdAt?: T;
@@ -2173,6 +2011,13 @@ export interface UsersSelect<T extends boolean = true> {
   hash?: T;
   loginAttempts?: T;
   lockUntil?: T;
+  sessions?:
+    | T
+    | {
+        id?: T;
+        createdAt?: T;
+        expiresAt?: T;
+      };
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -2255,6 +2100,7 @@ export interface FormsSelect<T extends boolean = true> {
               label?: T;
               width?: T;
               defaultValue?: T;
+              placeholder?: T;
               options?:
                 | T
                 | {
@@ -2346,7 +2192,6 @@ export interface SearchSelect<T extends boolean = true> {
   title?: T;
   priority?: T;
   doc?: T;
-  docUrl?: T;
   slug?: T;
   meta?:
     | T
@@ -2595,7 +2440,7 @@ export interface BannerBlock {
     root: {
       type: string;
       children: {
-        type: string;
+        type: any;
         version: number;
         [k: string]: unknown;
       }[];

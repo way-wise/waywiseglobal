@@ -9,7 +9,6 @@ import React from 'react'
 import type { Props as MediaProps } from '../types'
 
 import { cssVariables } from '@/cssVariables'
-import { getClientSideURL } from '@/utilities/getURL'
 
 const { breakpoints } = cssVariables
 
@@ -47,7 +46,9 @@ export const ImageMedia: React.FC<MediaProps> = (props) => {
     height = fullHeight!
     alt = altFromResource || ''
 
-    src = `${getClientSideURL()}${url || '/assets/placeholder.png'}`
+    // Use relative URLs so Next/Image treats them as same-origin across SSR and client navigation
+    // Avoid prefixing with window origin which can break next/image remotePatterns on client transitions
+    src = `${url || '/assets/placeholder.png'}`
   }
 
   const loading = loadingFromProps || 'lazy'
