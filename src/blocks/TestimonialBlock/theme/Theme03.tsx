@@ -2,6 +2,7 @@
 'use client'
 
 import React from 'react'
+import Image from 'next/image'
 
 import type { Media, Page } from '@/payload-types'
 import RichText from '@/components/RichText'
@@ -30,11 +31,16 @@ export const TestimonialTheme03: React.FC<
                         return (
                             <div className="lg:w-1/3 lg:mb-0 mb-6 p-4" key={index}>
                                 <div className="h-full text-center">
-                                    {
-                                        testimonial.image && (
-                                            <img alt="testimonial" className="w-20 h-20 mb-8 object-cover object-center rounded-full inline-block border-2 border-gray-200 bg-gray-100" src={(testimonial?.image as Media)?.url || ''} />
-                                        )
-                                    }
+                                    {testimonial.image && (
+                                        <div className="relative w-20 h-20 mb-8 inline-block">
+                                            <Image
+                                                alt="testimonial"
+                                                src={(testimonial?.image as Media)?.url || ''}
+                                                fill
+                                                className="object-cover object-center rounded-full border-2 border-gray-2 00 bg-gray-100"
+                                            />
+                                        </div>
+                                    )}
                                     <p className="leading-relaxed">{testimonial.quote}</p>
                                     <span className="inline-block h-1 w-10 rounded bg-indigo-500 mt-6 mb-4"></span>
                                     <h2 className="text-gray-900 font-medium title-font tracking-wider text-sm">{testimonial.name}</h2>

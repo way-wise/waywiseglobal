@@ -2,6 +2,7 @@
 'use client'
 
 import React from 'react'
+import Image from 'next/image'
 
 import type { Media, Page } from '@/payload-types'
 import RichText from '@/components/RichText'
@@ -43,15 +44,16 @@ export const TestimonialTheme01: React.FC<
                                         {testimonial.quote}
                                     </p>
                                     <a className="inline-flex items-center">
-                                        {
-                                            testimonial.image && (
-                                                <img
+                                        {testimonial.image && (
+                                            <div className="relative w-12 h-12 flex-shrink-0">
+                                                <Image
                                                     alt="testimonial"
                                                     src={(testimonial?.image as Media)?.url || ''}
-                                                    className="w-12 h-12 rounded-full flex-shrink-0 object-cover object-center"
+                                                    fill
+                                                    className="rounded-full object-cover object-center"
                                                 />
-                                            )
-                                        }
+                                            </div>
+                                        )}
                                         <span className="flex-grow flex flex-col pl-4">
                                             <span className="title-font font-medium text-gray-900 dark:text-gray-100">{testimonial.name}</span>
                                             <span className="text-gray-500 dark:text-gray-200 text-sm">{testimonial.position}</span>

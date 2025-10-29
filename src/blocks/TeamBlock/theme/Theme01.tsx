@@ -2,6 +2,7 @@
 'use client'
 
 import React from 'react'
+import Image from 'next/image'
 
 import type { Media, Page } from '@/payload-types'
 import RichText from '@/components/RichText'
@@ -33,7 +34,14 @@ export const TeamTheme01: React.FC<
             return (
               <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4" key={index}>
                 {image && typeof image === 'object' && (
-                  <img src={(image as Media)?.url || ''} className='size-20 rounded-lg' alt='image' />
+                  <div className='relative size-20'>
+                    <Image
+                      src={(image as Media)?.url || ''}
+                      alt='image'
+                      fill
+                      className='rounded-lg object-cover'
+                    />
+                  </div>
                 )}
 
                 <div className="grow">

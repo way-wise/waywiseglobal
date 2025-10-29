@@ -2,6 +2,7 @@
 'use client'
 
 import React from 'react'
+import Image from 'next/image'
 
 import type { Media, Page } from '@/payload-types'
 import RichText from '@/components/RichText'
@@ -30,11 +31,16 @@ export const TeamTheme03: React.FC<
                     teams?.map((team, index) => {
                         return (
                             <div className="text-center" key={index}>
-                                {
-                                    team?.image && (
-                                        <img className="rounded-full size-24 mx-auto" src={(team?.image as Media)?.url || ''} alt="Avatar" />
-                                    )
-                                }
+                                {team?.image && (
+                                    <div className="relative size-24 mx-auto">
+                                        <Image
+                                            src={(team?.image as Media)?.url || ''}
+                                            alt="Avatar"
+                                            fill
+                                            className="rounded-full object-cover"
+                                        />
+                                    </div>
+                                )}
                                 <div className="mt-2 sm:mt-4">
                                     <h3 className="font-medium text-gray-800 dark:text-neutral-200">
                                         {team?.name}
