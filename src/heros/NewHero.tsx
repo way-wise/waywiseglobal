@@ -117,14 +117,16 @@ const NewHero = ({ media }: NewHeroProps = {}) => {
               <div>
                 <Image
                   alt="Designer's Dream"
-                  width={512}
-                  height={512}
+                  width={450}
+                  height={450}
                   src="/api/media/file/Designer's-Dream-Final.png"
-                  className="object-contain w-36 group-hover:scale-110 transition"
+                  className="object-contain w-28 group-hover:scale-110 transition"
                 />
               </div>
-              <div className="max-w-none mx-auto prose dark:prose-invert text-center text-xs xl:text-xl font-semibold leading-tight text-black">
-                <p className="col-start-2">Your design Dream with Designer&apos;s dream</p>
+              <div className="max-w-none mx-auto prose dark:prose-invert text-center text-xs xl:text-base font-semibold text-black">
+                <p className="col-start-2 leading-[1.3]">
+                  Where Your Dream Touches Our Designer&apos;s Elegant Style.
+                </p>
               </div>
             </a>
 
