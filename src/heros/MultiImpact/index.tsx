@@ -24,7 +24,10 @@ export const MultiImpactHero: React.FC<Page['hero']> = ({
   })
 
   return (
-    <div className="relative -mt-[7em] flex items-center justify-center text-dark" data-theme="dark">
+    <div
+      className="relative -mt-[7em] flex items-center justify-center text-dark"
+      data-theme="dark"
+    >
       <div className="container my-8 pt-20 z-10 relative flex flex-col lg:flex-row xl:flex-col items-center gap-5">
         <div className="flex xl:hidden max-w-[36.5rem] text-center flex-grow w-full">
           {richText && <RichText className="mb-6" content={richText} enableGutter={false} />}
@@ -92,7 +95,13 @@ export const MultiImpactHero: React.FC<Page['hero']> = ({
               </div>
             )}
             <div className="hidden xl:block max-w-[36.5rem] text-center">
-              {richText && <RichText className="leading-tight drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)]" content={richText} enableGutter={false} />}
+              {richText && (
+                <RichText
+                  className="leading-tight drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)]"
+                  content={richText}
+                  enableGutter={false}
+                />
+              )}
               {Array.isArray(links) && links.length > 0 && (
                 <ul className="flex justify-center gap-4">
                   {links.map(({ link }, i) => {
