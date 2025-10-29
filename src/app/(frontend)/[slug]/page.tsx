@@ -66,7 +66,7 @@ export default async function Page({ params: paramsPromise }: Args) {
       <PayloadRedirects disableNotFound url={url} />
 
       {/* <RenderHero {...hero} /> */}
-      <NewHero media={hero?.media} />
+      {url === '/home' && <NewHero media={hero?.media} />}
       <RenderBlocks blocks={layout} />
     </article>
   )
