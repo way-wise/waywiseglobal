@@ -112,7 +112,7 @@ const NewHero = ({ media }: NewHeroProps = {}) => {
               target="_blank"
               rel="noopener noreferrer"
               className="flex flex-col gap-2 justify-center items-center h-auto aspect-[4/3] w-full xl:h-52 xl:w-72 bg-slate-100/50 p-5 rounded-xl backdrop-blur group hover:bg-slate-50/60"
-              href="https://designersdream.live"
+              href="https://www.designersdream.live"
             >
               <div>
                 <Image
